@@ -24,7 +24,7 @@ export default function page () {
   return(
     <Box bgImage={"/assets/bear.jpg"} bgSize={'100%'}   >  
     <Header/>
-    <Box bg={formBackgroundButton} mb={"195px"} padding={'20px'}  borderWidth={'1px'} mt={'100px'} gap={2} maxW={'500px'} mx={"auto"} display={'flex'} flexDirection={'column'}  onSubmit={handleSubmit(onSubmit)  }>
+    <Box bg={formBackgroundButton} mb={"195px"} padding={'20px'}  borderWidth={'1px'} mt={'100px'} maxW={'500px'} mx={"auto"} display={'flex'} flexDirection={'column'}  onSubmit={handleSubmit(onSubmit)  }>
       <VStack>
            <Text fontWeight={'bold'} fontSize={'30px'}>Sign Up</Text>
       </VStack> 
@@ -46,11 +46,20 @@ export default function page () {
       })} />
       <FormErrorMessage>{errors.age && errors.age.message}</FormErrorMessage> 
 
+      <FormLabel >Date</FormLabel>
+      <Input mb={'4px'} type={'date'} bg={'white'} color={"black"} focusBorderColor='lime' {...register("age", { 
+          required: "Please insert your Age",
+          min: { value: 3 , message: 'Age not in range' },
+          max: { value: 70 , message: 'Age not in range' }
+      })} />
+      <FormErrorMessage>{errors.age && errors.age.message}</FormErrorMessage> 
+
       <FormLabel >Email</FormLabel>
-      <Input mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='lime' {...register("email", { 
-          required: "Please insert your Email", 
-          pattern: { value: /[A-Z]+[a-zA-Z0-9_.+]+[@][a-z]+[\.][a-zA-Z0-9-.]{2,3}/, 
-          message: 'Email required upper case and (@.)' }
+      <Input mb={'4px'} type={'email'} bg={'white'} color={"black"} focusBorderColor='lime' {...register("email", { 
+          // required: "Please insert your Email", 
+          // pattern: { value: /[A-Z]+[a-zA-Z0-9_.+]+[@][a-z]+[\.][a-zA-Z0-9-.]{2,3}/, 
+          // message: 'Email required upper case and (@.)' }
+
       })} />
       <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage> 
       </FormControl>
@@ -78,7 +87,7 @@ export default function page () {
       </InputGroup>
         <FormErrorMessage mb={'10px'}>{errors.password && errors.password.message}</FormErrorMessage>
       </FormControl>
-        <motion.div whileTap={{scale:0.1}}>
+        <motion.div whileTap={{scale:0.9}}>
         <Button width={'100%'} type={"submit"}  colorScheme={`purple`} onClick={handleLogin}> Submit</Button>
         </motion.div>
         {/* <Text>

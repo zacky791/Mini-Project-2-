@@ -15,17 +15,17 @@ export default function SignUpForm() {
 
   return (
     <>
-    <video controls src={"/assets/leonvideo.mp4"} style={{ width: "100%", height:"100%" }} autoPlay loop muted />
+    {/* <video controls src={"/assets/leonvideo.mp4"} style={{ width: "100%", height:"100%" }} autoPlay loop muted /> */}
     <Box
-     padding={'20px'}  gap={2} position="absolute" alignItems={"center"} justifyContent={"center"} top={"260px"} left={"550px"} flexDirection='column'>
+     padding={'20px'} position="absolute" alignItems={"center"} justifyContent={"center"} top={"260px"} left={"550px"} flexDirection='column'>
       <VStack>
         <HStack>  
-          <Text fontWeight={'bold'} fontSize={30} mb={2}>Welcome To Homepage</Text>
+          <Text fontWeight={'bold'} fontSize={"30px"} mb={"6px"}>Welcome To Homepage</Text>
           <Image src={'/assets/leon.png'} width={50} height={30} alt={'leon'}/>
         </HStack>
       {/* <Button onClick={toggleColorMode} fontWeight={'bold'} >Toggle Color Mode</Button> */}
-      <ChakraNextLinkButton href={'/signup'} width={40} fontWeight={'bold'}>Sign Up</ChakraNextLinkButton>
-      <ChakraNextLinkButton href={'/login'} width={40} fontWeight={'bold'}>Login</ChakraNextLinkButton> 
+      <ChakraNextLinkButton href={'/signup'} width={"160px"} fontWeight={'bold'}>Sign Up</ChakraNextLinkButton>
+      <ChakraNextLinkButton href={'/login'} width={"160px"} fontWeight={'bold'}>Login</ChakraNextLinkButton> 
       </VStack>
     </Box>
     {/* </Center> */}
