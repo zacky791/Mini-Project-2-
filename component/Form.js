@@ -61,12 +61,10 @@ export default function Form() {
       </InputGroup>
         <FormErrorMessage mb={'10px'}>{errors.password && errors.password.message}</FormErrorMessage>
       </FormControl>
+      
         <motion.div whileTap={{scale:0.1}}>
         <Button width={'100%'} type={"submit"}  colorScheme={`purple`} onClick={handleLogin}> Submit</Button>
         </motion.div>
-        {/* <Text>
-            {login && alert("Sucess Login")}
-        </Text> */}
        </form>
         </Box>
     </>

@@ -16,8 +16,10 @@
     "framer-motion": "^8.4.2",
     "next": "13.1.1",
     "react": "18.2.0",
+    "react-avatar-editor": "^13.0.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.41.5",
-    "react-icons": "^4.7.1"
+    "react-icons": "^4.7.1",
+    "uploader": "^3.1.0"
   }
 }

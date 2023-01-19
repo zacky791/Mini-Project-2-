@@ -1,4 +1,4 @@
-import { Box, Button, Center, Flex, Input, InputGroup, InputRightElement, useColorMode, VStack, useColorModeValue,Text, HStack } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Input, InputGroup, InputRightElement, useColorMode, VStack, useColorModeValue,Text, HStack, Container } from "@chakra-ui/react";
 import React  from "react";
 import Image from "next/image";
 import ChakraNextLinkButton from "../component/ui/Button";
@@ -16,7 +16,7 @@ export default function SignUpForm() {
   return (
     <>
     {/* <video controls src={"/assets/leonvideo.mp4"} style={{ width: "100%", height:"100%" }} autoPlay loop muted /> */}
-    <Box
+    <Box  borderRadius={"10px"} bg={"blue"}
      padding={'20px'} position="absolute" alignItems={"center"} justifyContent={"center"} top={"260px"} left={"550px"} flexDirection='column'>
       <VStack>
         <HStack>  
@@ -28,7 +28,6 @@ export default function SignUpForm() {
       <ChakraNextLinkButton href={'/login'} width={"160px"} fontWeight={'bold'}>Login</ChakraNextLinkButton> 
       </VStack>
     </Box>
-    {/* </Center> */}
     </>
   );
 }
