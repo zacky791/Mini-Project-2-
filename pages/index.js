@@ -2,6 +2,8 @@ import { Box, Button, Center, Flex, Input, InputGroup, InputRightElement, useCol
 import React  from "react";
 import Image from "next/image";
 import ChakraNextLinkButton from "../component/ui/Button";
+import Header from "../component/Navbar";
+import Footer from "../component/Footer";
 
 
 export default function SignUpForm() {
@@ -16,8 +18,10 @@ export default function SignUpForm() {
   return (
     <>
     {/* <video controls src={"/assets/leonvideo.mp4"} style={{ width: "100%", height:"100%" }} autoPlay loop muted /> */}
-    <Box  borderRadius={"10px"} bg={"blue"}
-     padding={'20px'} position="absolute" alignItems={"center"} justifyContent={"center"} top={"260px"} left={"550px"} flexDirection='column'>
+    <Box bgImage={"/assets/forest5.jpg"} width={"100%"} height={"100vh"}>
+      <Header/>
+    <Box  borderRadius={"10px"} bg={"purple.200"}
+     padding={'20px'} width={"500px"} mx={"auto"} mt={"210px"} display={"flex"} alignItems={"center"} justifyContent={"center"}  flexDirection='column'>
       <VStack>
         <HStack>  
           <Text fontWeight={'bold'} fontSize={"30px"} mb={"6px"}>Welcome To Homepage</Text>
@@ -28,6 +32,8 @@ export default function SignUpForm() {
       <ChakraNextLinkButton href={'/login'} width={"160px"} fontWeight={'bold'}>Login</ChakraNextLinkButton> 
       </VStack>
     </Box>
+    </Box>
+    <Footer/>
     </>
   );
 }

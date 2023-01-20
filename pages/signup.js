@@ -135,15 +135,15 @@ export default function page () {
       { active === 1 && 
           <Container display={"flex"} alignItems={"center"} justifyContent={"center"} gap={"20px"}>
           <Box padding={"10px"} textAlign={"center"}>
-          <Text mb={"5px"} fontSize={"20px"} fontWeight={"bold"} fontStyle={"italic"}>Tutor</Text>
-          <Text mb={"10px"}>This section is for a person who want to register as teacher to CIC </Text>
-            <Img src={"/assets/leonfighting.PNG"} borderRadius={"10px"} onClick={()=>{setActive(2)}} />
+          <Text mb={"5px"} fontSize={"16px"} fontWeight={"bold"} fontStyle={"italic"}>Tutor</Text>
+          <Text mb={"10px"}>This section is for a person who want to register as a teacher </Text>
+            <Img src={"/assets/leonfighting.PNG"}  borderRadius={"10px"} height={"188px"} width={"400px"} onClick={()=>{setActive(2)}} />
           </Box>
           <Box  padding={"10px"} textAlign={"center"}>
-          <Text mb={"5px"} fontSize={"20px"} fontWeight={"bold"} fontStyle={"italic"}>Guardian</Text>
-          <Text mb={"10px"}>This section is for a parent who want to register their son to CIC </Text>
+          <Text mb={"5px"} fontSize={"16px"} fontWeight={"bold"} fontStyle={"italic"}>Guardian</Text>
+          <Text mb={"10px"}>This section is for a parent who want to register their son </Text>
           <motion.a whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.8 }} style={{ x: 100 }}> 
-            <Img src={"/assets/leongame.PNG"} borderRadius={"10px"} onClick={()=>{setActive(3)}}/>
+            <Img src={"/assets/leongame.PNG"} borderRadius={"10px"} height={"188px"} width={"400px"} onClick={()=>{setActive(3)}}/>
           </motion.a>
           </Box>
           </Container> 
@@ -233,11 +233,13 @@ export default function page () {
 
       <FormControl isInvalid={errors.age} >
       <FormLabel >Age</FormLabel>
-      <Input borderRadius={"10px"} mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='lime' {...register("age", { 
+      <Input borderRadius={"10px"} mb={'4px'} type={'number'} bg={'white'} color={"black"} focusBorderColor='lime' {...register("age", { 
           required: "Please insert your age"
       })} />
       <FormErrorMessage>{errors.age && errors.age.message}</FormErrorMessage> 
       </FormControl>
+
+      
 
       <FormControl isInvalid={errors.gender} mb={"20px"}>
       <FormLabel >Gender</FormLabel>
@@ -276,7 +278,7 @@ export default function page () {
     { active === 4 && 
       <>
       {Object.entries(values).map(([key,value])=>
-      <div>{`[${key}]: ${value}`}</div>
+      <div>{`${key}: ${value}`}</div>
       )}
       {/* <ChakraNextLinkButton href={"/"}>Go back</ChakraNextLinkButton>
       <Button >Submit</Button> */}
@@ -294,7 +296,7 @@ export default function page () {
 
     { active === 5 && 
     <>
-    <Text textAlign={"center"} fontWeight={"bold"} mb={"15px"}>Terima kasih kerana mendaftar di bawah CIC 💕💖 </Text>
+    <Text textAlign={"center"} fontWeight={"bold"} mb={"15px"}>Thank you for register under the CIC company 💕💖<br/>An activation link has been sent to their email 📧 </Text>
     <Center>
     <motion.div whileTap={{scale:0.9}} >
         <ChakraNextLinkButton href={"/"} colorScheme={"purple"}>Welcome</ChakraNextLinkButton>
