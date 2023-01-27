@@ -13,10 +13,10 @@ const schema = yup.object({
   // age: yup.number().positive().integer().required(),
 }).required();
 
-//react hook form
-// const {register, handleSubmit, formState: {errors}, getValues } = useForm({
-//   resolver: yupResolver(schema)
-// })
+// react hook form
+const {register, handleSubmit, formState: {errors}, getValues } = useForm({
+  resolver: yupResolver(schema)
+})
 
 const onSubmit = data =>{
   console.log(data); 
