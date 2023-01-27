@@ -18,18 +18,18 @@ export default function SignUpForm() {
   return (
     <>
     {/* <video controls src={"/assets/leonvideo.mp4"} style={{ width: "100%", height:"100%" }} autoPlay loop muted /> */}
-    <Box bgImage={"/assets/forest5.jpg"} width={"100%"} height={"100vh"}>
+    <Box bgImage={"/assets/forest5.webp"} width={"100%"} height={"100vh"}>
       <Header/>
     <Box  borderRadius={"10px"} bg={"purple.200"}
-     padding={'20px'} width={"500px"} mx={"auto"} mt={"210px"} display={"flex"} alignItems={"center"} justifyContent={"center"}  flexDirection='column'>
-      <VStack>
+     paddingX={'20px'} paddingY={"60px"} width={"500px"} mx={"auto"} mt={"180px"} display={"flex"} alignItems={"center"} justifyContent={"center"}  flexDirection='column'>
+      <VStack gap={"5px"}>
         <HStack>  
           <Text fontWeight={'bold'} fontSize={"30px"} mb={"6px"}>Welcome To Homepage</Text>
-          <Image src={'/assets/leon.png'} width={50} height={30} alt={'leon'}/>
+          {/* <Image src={'/assets/leon.png'} width={50} height={30} alt={'leon'}/> */}
         </HStack>
       {/* <Button onClick={toggleColorMode} fontWeight={'bold'} >Toggle Color Mode</Button> */}
-      <ChakraNextLinkButton href={'/signup'} width={"160px"} fontWeight={'bold'}>Sign Up</ChakraNextLinkButton>
-      <ChakraNextLinkButton href={'/login'} width={"160px"} fontWeight={'bold'}>Login</ChakraNextLinkButton> 
+      <ChakraNextLinkButton href={'/signup'} width={"355px"} fontWeight={'bold'}>Sign Up</ChakraNextLinkButton>
+      <ChakraNextLinkButton href={'/login'} width={"355px"} fontWeight={'bold'}>Login</ChakraNextLinkButton> 
       </VStack>
     </Box>
     </Box>

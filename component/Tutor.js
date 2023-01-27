@@ -1,32 +1,47 @@
+import { Box,Button, Input, InputGroup, InputRightElement, VStack, Text, FormLabel, FormControl, FormErrorMessage, useColorModeValue, Container, Img, Select, RadioGroup, Stack, Radio, Textarea, Image, Flex, Center } from "@chakra-ui/react"
 import React, { useState } from 'react'
-import { Box,Button, Input, InputGroup, InputRightElement, VStack, Text, FormLabel, FormControl, FormErrorMessage, useColorModeValue, Img, Select, HStack, Container, Textarea, RadioGroup, Stack, Radio } from "@chakra-ui/react"
-import { motion } from "framer-motion"
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 import { useForm } from "react-hook-form";
+import { motion } from "framer-motion"
 
+const Tutor = () => {
 
-function Tutor({setActive}) {
-    
-  const {register, handleSubmit, formState: {errors} } = useForm()
-  const [file, setFile] = useState()
+    //validation yup
+const schema = yup.object({
+    username: yup.string().required(),
+    email: yup.string().email().required(),
+    password: yup.string().required().min(8,"password too short"),
+    // age: yup.number().positive().integer().required(),
+  }).required();
 
-  //for display data 
+   //for display preview image
+   function handleChange(e) {
+    console.log(e.target.files);
+    setProfilePicture(URL.createObjectURL(e.target.files[0]));
+ }
+
+      //for subsribe newsletter
+  //FIXME - testing true or false
+  const [newsletter, setNewsletter] = useState('0')
+
+      //for display profile picture
+  const [profilePicture, setProfilePicture] = useState()
+
+    //react hook form
+  const {register, handleSubmit, formState: {errors}, getValues } = useForm({
+    resolver: yupResolver(schema)
+  })
   const onSubmit = data =>{
     console.log(data); 
-    setActive(2)
-  } 
 
-  //for display preview image
-  function handleChange(e) {
-    console.log(e.target.files);
-    setFile(URL.createObjectURL(e.target.files[0]));
+  //this for action after pass the validation (it will change screen)
+  screen === 0 ? setScreen(1) : setScreen(4)
   }
 
-  //for newsletter
-  const [newsLetter, setNewsLetter] = React.useState('0')
-
   return (
-  <>
-    <FormControl isInvalid={errors.experience}>
+    <>
+      <FormControl isInvalid={errors.experience}>
       <FormLabel >Years Of Teaching Experience</FormLabel>
       <Select bg={"white"} borderRadius={"10px"} {...register("experience", { 
           required: "Please insert your Experience"
@@ -51,32 +66,35 @@ function Tutor({setActive}) {
        <FormErrorMessage>{errors.aboutme && errors.aboutme.message}</FormErrorMessage> 
        </FormControl>
 
-      <FormControl isInvalid={errors.profilepic}>
+      <FormControl isInvalid={errors.profilepic} onChange={handleChange}>
       <FormLabel >Profile Picture</FormLabel>
-      <Input borderRadius={"10px"} mb={'4px'} type={'file'}  color={"black"} onChange={handleChange} focusBorderColor='lime' {...register("profilepic", { 
+      <Input borderRadius={"10px"} mb={'4px'} type={'file'}  color={"black"}  focusBorderColor='lime' {...register("profilepic", { 
         required: "Please insert your profile picture"
       })} />
-      <Img src={file} />
+       <Flex justifyContent={"center"} alignItems={"center"} mb={"15px"}>
+      <Image src={profilePicture}  />
+      </Flex>  
       <FormErrorMessage>{errors.profilepic && errors.profilepic.message}</FormErrorMessage> 
       </FormControl>
 
+      <FormControl isInvalid={errors.newsletter}>
       <FormLabel >Do You Want To Receive Newsletter</FormLabel>
-      <RadioGroup onChange={setNewsLetter} value={newsLetter} mb={"20px"}>
+      <RadioGroup onChange={setNewsletter} value={newsletter} mb={"20px"} {...register("newsletter" )}>
         <Stack direction={"row"}>
           <Radio value='0'>Yes</Radio>
           <Radio value='1'>No</Radio>
         </Stack>
       </RadioGroup>
+      </FormControl>
 
       <Container display={"flex"} justifyContent={"space-between"} alignItems={""}>
-      <motion.div whileTap={{scale:0.9}} onClick={()=>{setActive(1)}}>
+      <motion.div whileTap={{scale:0.9}} onClick={()=>{setScreen(1)}}>
         <Button width={'100%'} type={"submit"}  colorScheme={`gray`} > Back</Button>
       </motion.div>
 
         <Button width={'40%'}  colorScheme={`purple`} type={"submit"} > Submit</Button>
 
-      </Container> 
-  </>
+      </Container>  </>
   )
 }
 

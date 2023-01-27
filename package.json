@@ -18,14 +18,20 @@
     "@fontsource/quicksand": "^4.5.12",
     "@fontsource/raleway": "^4.5.12",
     "@fontsource/raleway-dots": "^4.5.11",
+    "@hookform/resolvers": "^2.9.10",
     "@next/font": "13.1.1",
     "framer-motion": "^8.4.2",
     "next": "13.1.1",
     "react": "18.2.0",
     "react-avatar-editor": "^13.0.0",
     "react-dom": "18.2.0",
-    "react-hook-form": "^7.41.5",
+    "react-hook-form": "^7.42.1",
     "react-icons": "^4.7.1",
-    "uploader": "^3.1.0"
+    "uploader": "^3.1.0",
+    "yup": "^0.32.11",
+    "zustand": "^4.3.2"
+  },
+  "devDependencies": {
+    "prettier": "2.8.3"
   }
 }

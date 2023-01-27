@@ -5,296 +5,128 @@ import React, { useState } from "react";
 import Header from "../component/Navbar"
 import { motion } from "framer-motion"
 import ChakraNextLinkButton from "../component/ui/Button";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+import SignUpForm from "../component/SignUpForm";
+import RolesToPick from "../component/RolesToPick";
+import Tutor from "../component/Tutor";
+import Guardian from "../component/Guardian";
+import DisplayData from "../component/DisplayData";
 
 export default function page () {
 
-  //for dark mode
-  const formBackgroundButton = useColorModeValue('purple.100' , 'purple.500')
+  //Mistake for this project for improvement
+  // 1. Needed to compress the pic and vid (10mb) to svg or .webp since it fall under 
+  // public folder so its bad for user to download large folder and optimization 
+  // 2. detail the name of variable so that other developer understand
+  // 3. dont forget to delete unnecessary code (use anchor to avoid this mistake)
+  // 4. it was better to minimize the code by using data structure
+  // 5. changing the html element itself was a bad approach unless it was a last resort
+  // 6. accesibility very crucial so need to chnage pic into button so that person can use tab
+  // 7. call for action - for example description of "Click here to go this section"
+  // 8. code splitting lead to code readbility, code optimization , easy to maintain 
+  // 9. The correct approach is make sure code it self work first ! then can proceed for optimization
+  // 10. please be consistent using camel case 
+  // 11. error indeed must be very specific for ex : description too short , min character 5
+  // 12. do not center paragraph , let it be left side 
+  // 13. avoid doing to much stylish 
+  // 14. follow the visual refference company pdf
+  // 15. be specific towards the handler for ex this handler handle what ?
 
-  //use to display
-  const [active,setActive] = useState(0)
+  // mistake not improve yet 6,8,11,14,15 !!! 
+  // nak guna variable global must split the useform into 3 part then combine it 
+  // schema must also divided into 3 part 
+  // the dynamic platform from react hook form documentation 
+
+  //use to changing main screen
+  const [screen,setScreen] = useState(1)
+  
+  //for dark mode
+  const formBackground = useColorModeValue('purple.100' , 'purple.500')
 
   //change background image
+  const backgroundImage = ["/assets/dino.webp","/assets/bear.webp","/assets/animal3.webp","/assets/forest1.webp","/assets/congrat3.webp","/assets/congrat3.webp"]
   const changeBackgroundImage = () => {
-  if (active === 0){
-    return ("/assets/dino.jpg")
-  } else if (active === 1) {
-    return ("/assets/bear.jpg")
-  } else if (active ===2 ) {
-    return ("/assets/animal3.jpg")
-  } else if (active ===3 ) {
-    return ("/assets/forest1.jpg")
-  } else if (active ===4 ) {
-    return ("/assets/congrat3.jpg")
-  } else if (active ===5 ) {
-    return ("/assets/congrat3.jpg")
-  } }
+  return backgroundImage[screen] }
 
-  const {register, handleSubmit, formState: {errors}, getValues } = useForm()
+    //validation yup
+const schema = yup.object({
+  username: yup.string().required(),
+  email: yup.string().email().required(),
+  password: yup.string().required().min(8,"password too short"),
+  // age: yup.number().positive().integer().required(),
+}).required();
 
-  const values = getValues();
-
-  //display data 
-  const methods = useForm();
+  //react hook form
+  const {register, handleSubmit, formState: {errors}, getValues } = useForm({
+    resolver: yupResolver(schema)
+  })
   const onSubmit = data =>{
     console.log(data); 
-    
-    if(active === 0){
-      setActive(1)
-    } else if (active === 2,3){
-      setActive(4)
-    }
+
+  //this for action after pass the validation (it will change screen)
+  screen === 0 ? setScreen(1) : setScreen(4)
   }
   
-  //for display picture
-  const [file, setFile] = useState()
-
+  //use to display all the value that has been insert on page information area 
+  const values = getValues();
+  
   //for subsribe newsletter
-  const [newsLetter, setNewsLetter] = React.useState('0')
-
-
+  //FIXME - testing true or false
+  const [newsletter, setNewsletter] = useState('0')
+  
   //for showing password
-  const [show, setShow] = React.useState(false)
-  const handleClick = () => setShow(!show)
+  const [showPassword, setShowPassword] = useState(false)
+  const handleClick = () => setShowPassword(!showPassword)
+  
+  //for display profile picture
+  const [profilePicture, setProfilePicture] = useState()
 
   //for display preview image
   function handleChange(e) {
      console.log(e.target.files);
-     setFile(URL.createObjectURL(e.target.files[0]));
+     setProfilePicture(URL.createObjectURL(e.target.files[0]));
   }
-  
 
   return(
     <>
     <Box bgImage={changeBackgroundImage} bgSize={'100%'} >  
     <Header/>
-    <Box bg={formBackgroundButton} borderRadius={"10px"} mb={"195px"} padding={'20px'}  borderWidth={'1px'} mt={'100px'} maxW={'500px'} mx={"auto"} display={'flex'} flexDirection={'column'}   >
+    <Box bg={formBackground} borderRadius={"10px"} mb={"195px"} padding={'40px'}  borderWidth={'1px'} mt={'100px'} maxW={'500px'} mx={"auto"} display={'flex'} flexDirection={'column'}   >
       <VStack>
-           <Text as='u' fontWeight={'bold'} fontSize={'30px'} mb={"10px"}>Sign Up</Text>
+           <Text fontWeight={'bold'} fontSize={'30px'} mb={"10px"}>Sign Up</Text>
       </VStack> 
 
 
    <form onSubmit={handleSubmit(onSubmit)}>
 
-      {/* //signup homepage */}
+      { screen === 0 && <SignUpForm/>}
 
-      { active === 0 && <>
-
-    <FormControl isInvalid={errors.username}>
-        <FormLabel >Username</FormLabel>
-      <Input mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='lime' {...register("username", { 
-          required: "Please insert your Username"
-      })} />
-      <FormErrorMessage>{errors.username && errors.username.message}</FormErrorMessage> 
-      </FormControl>
-
-      <FormControl isInvalid={errors.email}>
-      <FormLabel >Email</FormLabel>
-      <Input mb={'4px'} type={'email'} bg={'white'} color={"black"} focusBorderColor='lime' {...register("email", { 
-        required: "Please insert your Email", 
-        // pattern: { value: /[A-Z]+[a-zA-Z0-9_.+]+[@][a-z]+[\.][a-zA-Z0-9-.]{2,3}/, 
-        // message: 'Email required upper case and (@.)' }
-        
-      })} />
-      <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage> 
-      </FormControl>
-      
-
-      <FormControl isInvalid={errors.password} mb={'10px'}>
-      <FormLabel >Password</FormLabel>
-      <InputGroup size={'md'} mb={'5px'}>
-      <Input 
-        bg={'white'} 
-        color={"black"}
-        pr={"10px"}
-        type={show ? 'text' : 'password'}
-        focusBorderColor={'lime'}
-        {...register("password", { required: "Please insert your password", 
-        minLength: { value: 4 , message: 'Password too short !' },
-        maxLength: { value: 15 , message: 'Password too long !' }
-      })}
-      />
-        
-      <InputRightElement width={'80px'}>
-        <Button bg={"purple.100"} h={'27px'} size={'sm'} onClick={handleClick}>
-          {show ? 'Hide' : 'Show'}
-        </Button>
-      </InputRightElement>
-      </InputGroup>
-        <FormErrorMessage mb={'10px'}>{errors.password && errors.password.message}</FormErrorMessage>
-      </FormControl>
-
-      <motion.div whileTap={{scale:0.9}}>
-        <Button width={'100%'}  colorScheme={`purple`} type={"submit"}  > Next </Button>
-        </motion.div>  
-      </>
-      }
-
-      {/* Roles to pick */}
-
-      { active === 1 && 
-          <Container display={"flex"} alignItems={"center"} justifyContent={"center"} gap={"20px"}>
-          <Box padding={"10px"} textAlign={"center"}>
-          <Text mb={"5px"} fontSize={"16px"} fontWeight={"bold"} fontStyle={"italic"}>Tutor</Text>
-          <Text mb={"10px"}>This section is for a person who want to register as a teacher </Text>
-            <Img src={"/assets/leonfighting.PNG"}  borderRadius={"10px"} height={"188px"} width={"400px"} onClick={()=>{setActive(2)}} />
+      { screen === 1 &&     <Container display={"flex"} alignItems={"center"} justifyContent={"center"} gap={"40px"}>
+          <Box width={"500px"}>
+          <Text mb={"5px"} fontSize={"16px"} fontWeight={"bold"}>Tutor</Text>
+          <Text mb={"10px"}>Click this picture for a person who want to register as a teacher </Text>
+          <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.8 }} style={{cursor:"pointer"}}> 
+            <Img src={"/assets/leonfighting.webp"}  borderRadius={"10px"} height={"188px"} width={"400px"} onClick={()=>{setScreen(2)}} />
+          </motion.div>
           </Box>
-          <Box  padding={"10px"} textAlign={"center"}>
-          <Text mb={"5px"} fontSize={"16px"} fontWeight={"bold"} fontStyle={"italic"}>Guardian</Text>
-          <Text mb={"10px"}>This section is for a parent who want to register their son </Text>
-          <motion.a whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.8 }} style={{ x: 100 }}> 
-            <Img src={"/assets/leongame.PNG"} borderRadius={"10px"} height={"188px"} width={"400px"} onClick={()=>{setActive(3)}}/>
-          </motion.a>
+
+          <Box width={"500px"}>
+          <Text mb={"5px"} fontSize={"16px"} fontWeight={"bold"}>Guardian</Text>
+          <Text mb={"10px"}>Click this picture for a parent who want to register their son </Text>
+          <motion.div whileHover={{ scale: 1.2 }} whileTap={{ scale: 0.8 }} style={{cursor:"pointer"}}> 
+            <Img src={"/assets/leongame.webp"} borderRadius={"10px"} height={"188px"} width={"470px"} onClick={()=>{setScreen(3)}}/>
+          </motion.div>
           </Box>
-          </Container> 
-      }
+    </Container> }
 
-        {/* Tutor */}
+      { screen === 2 && <Tutor/>}
 
-      { active === 2 && <>
-      <FormControl isInvalid={errors.experience}>
-      <FormLabel >Years Of Teaching Experience</FormLabel>
-      <Select bg={"white"} borderRadius={"10px"} {...register("experience", { 
-          required: "Please insert your Experience"
-      })}>
-        <option>None</option>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5++</option>
-      </Select>
-      <FormErrorMessage>{errors.experience && errors.experience.message}</FormErrorMessage> 
-      </FormControl>
+      { screen === 3 &&  <Guardian/> }
 
-      <FormControl isInvalid={errors.aboutme}>
-       <FormLabel >About Me</FormLabel>
-       <Textarea borderRadius={"10px"} height={"90px"} mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='lime' {...register("aboutme", { 
-          required: "Please insert about me",
-          minLength: { value: 5 , message: 'Too short' },
-          maxLength: { value: 70 , message: 'Too many words' }
-      })} />
-       <FormErrorMessage>{errors.aboutme && errors.aboutme.message}</FormErrorMessage> 
-       </FormControl>
+    { screen === 4 && <DisplayData/>}
 
-      <FormControl isInvalid={errors.profilepic} onChange={handleChange}>
-      <FormLabel >Profile Picture</FormLabel>
-      <Input borderRadius={"10px"} mb={'4px'} type={'file'}  color={"black"}  focusBorderColor='lime' {...register("profilepic", { 
-        required: "Please insert your profile picture"
-      })} />
-       <Flex justifyContent={"center"} alignItems={"center"} mb={"15px"}>
-      <Image src={file}  />
-      </Flex>  
-      <FormErrorMessage>{errors.profilepic && errors.profilepic.message}</FormErrorMessage> 
-      </FormControl>
-
-      <FormControl isInvalid={errors.newsLetter}>
-      <FormLabel >Do You Want To Receive Newsletter</FormLabel>
-      <RadioGroup onChange={setNewsLetter} value={newsLetter} mb={"20px"} {...register("newsletter" )}>
-        <Stack direction={"row"}>
-          <Radio value='0'>Yes</Radio>
-          <Radio value='1'>No</Radio>
-        </Stack>
-      </RadioGroup>
-      </FormControl>
-
-      <Container display={"flex"} justifyContent={"space-between"} alignItems={""}>
-      <motion.div whileTap={{scale:0.9}} onClick={()=>{setActive(1)}}>
-        <Button width={'100%'} type={"submit"}  colorScheme={`gray`} > Back</Button>
-      </motion.div>
-
-        <Button width={'40%'}  colorScheme={`purple`} type={"submit"} > Submit</Button>
-
-      </Container>  </>
-      }
-
-      {/* Guardian */}
-
-      { active === 3 &&  <>
-    <FormControl isInvalid={errors.profilepic} onChange={(e)=>{setFile(URL.createObjectURL(e.target.files[0]))}} >
-    <FormLabel >Profile Picture</FormLabel>
-      <Input mb={'4px'} type={'file'}  color={"black"}  focusBorderColor='lime' {...register("profilepic", { 
-        required: "Please insert your profile picture"
-      })} />
-      <FormErrorMessage>{errors.profilepic && errors.profilepic.message}</FormErrorMessage> 
-      </FormControl>
-
-      <Flex justifyContent={"center"} alignItems={"center"}>
-      <Image src={file}  />
-      </Flex>  
-
-      <FormControl isInvalid={errors.name} >
-      <FormLabel >Name</FormLabel>
-      <Input borderRadius={"10px"} mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='lime' {...register("name", { 
-          required: "Please insert your name"
-      })} />
-      <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage> 
-      </FormControl>
-
-      <FormControl isInvalid={errors.age} >
-      <FormLabel >Age</FormLabel>
-      <Input borderRadius={"10px"} mb={'4px'} type={'number'} bg={'white'} color={"black"} focusBorderColor='lime' {...register("age", { 
-          required: "Please insert your age"
-      })} />
-      <FormErrorMessage>{errors.age && errors.age.message}</FormErrorMessage> 
-      </FormControl>
-
-      
-
-      <FormControl isInvalid={errors.gender} mb={"20px"}>
-      <FormLabel >Gender</FormLabel>
-      <Select bg={"white"} borderRadius={"10px"} {...register("gender", { 
-          required: "Please insert your Experience"
-      })}>
-        <option>Male</option>
-        <option>Female</option>
-      </Select>
-      <FormErrorMessage>{errors.gender && errors.gender.message}</FormErrorMessage> 
-      </FormControl>
-
-      <FormControl >
-      <FormLabel >Do You Want To Receive Newsletter</FormLabel>
-      <RadioGroup onChange={setNewsLetter} value={newsLetter} mb={"20px"}>
-        <Stack direction={"row"}>
-          <Radio value='0'>Yes</Radio>
-          <Radio value='1'>No</Radio>
-        </Stack>
-      </RadioGroup>
-      </FormControl>
-
-      <Container display={"flex"} justifyContent={"space-between"} alignItems={""}>
-      <motion.div whileTap={{scale:0.9}} onClick={()=>{setActive(1)}}>
-        <Button width={'100%'} type={"submit"}  colorScheme={`gray`} > Back</Button>
-      </motion.div>
-
-        <Button width={'40%'}  colorScheme={`purple`} type={"submit"}  > Submit</Button>
-
-      </Container> 
-
-  </> }
-
-    {/* information area */}
-
-    { active === 4 && 
-      <>
-      {Object.entries(values).map(([key,value])=>
-      <div>{`${key}: ${value}`}</div>
-      )}
-      {/* <ChakraNextLinkButton href={"/"}>Go back</ChakraNextLinkButton>
-      <Button >Submit</Button> */}
-
-      <Container display={"flex"} justifyContent={"space-between"} mt={"20px"}>
-      <motion.div whileTap={{scale:0.9}} onClick={()=>{setActive(1)}}>
-        <Button width={'100%'} type={"submit"}  colorScheme={`gray`} > Back</Button>
-      </motion.div>
-
-        <Button width={'40%'}  colorScheme={`purple`} onClick={()=>{setActive(5)}} > Submit</Button>
-
-      </Container>  
-      </>
-    }
-
-    { active === 5 && 
+    { screen === 5 && 
     <>
     <Text textAlign={"center"} fontWeight={"bold"} mb={"15px"}>Thank you for register under the CIC company 💕💖<br/>An activation link has been sent to their email 📧 </Text>
     <Center>

@@ -14,7 +14,7 @@ function Footer() {
         >
         <VStack spacing={'6px'} display={{base:"none", md:"inline-block"}} mx={"auto"}>
           <Box >
-            <Logo src="/assets/Leon.png" alt="Leon Logo" width={'120px'} ml={"14px"} />
+            <Logo src="/assets/Leon.webp" alt="Leon Logo" width={'120px'} ml={"14px"} />
           </Box>
           <Text fontSize={'sm'} >
             © 2022 Leon Classroom
