@@ -12,9 +12,6 @@ export default function LoginForm() {
   const [login, setLogin] = useState(false)
   const handleClick = () => setShow(!show)
 
-  //for dark mode
-  const formBackgroundButton = useColorModeValue('purple.100' , 'purple.500')
-
   //for pop up
   const handleLogin = () => {
     setLogin(!show)
@@ -22,7 +19,7 @@ export default function LoginForm() {
 
   return (
     <>
-    <Box bg={formBackgroundButton} mb={"195px"} padding={'40px'} borderRadius={"10px"} borderWidth={'1px'} mt={'150px'} gap={2} maxW={'500px'} mx={"auto"} display={'flex'} flexDirection={'column'}  onSubmit={handleSubmit(onSubmit)  }>
+    <Box bg={"purple.100"} mb={"195px"} padding={'40px'} borderRadius={"10px"} borderWidth={'1px'} mt={'150px'} gap={2} maxW={'500px'} mx={"auto"} display={'flex'} flexDirection={'column'}  onSubmit={handleSubmit(onSubmit)  }>
       <VStack>
            <Text fontWeight={'bold'} fontSize={'30px'}>Login</Text>
       </VStack> 

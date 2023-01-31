@@ -1,28 +1,47 @@
-import { Box,Button, Input, InputGroup, InputRightElement, VStack, Text, FormLabel, FormControl, FormErrorMessage, useColorModeValue, Container, Img, Select, RadioGroup, Stack, Radio, Textarea, Image, Flex, Center } from "@chakra-ui/react"
-import React from 'react'
+import { Button, Input, InputGroup, InputRightElement, FormLabel, FormControl, FormErrorMessage } from "@chakra-ui/react"
+import React, { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
+import { motion } from "framer-motion"
+import  useStore  from "../util/useStore";
 
+//REVIEW - 
+// need to make logic pass the validation scehama first then can change page
+// solution is make sure it button set to type submit and we change page through onsubmit function
+// changing number can convert to another page
+
+
+const SignUpForm = () => {
 
 //validation yup
 const schema = yup.object({
-  username: yup.string().required(),
-  email: yup.string().email().required(),
-  password: yup.string().required().min(8,"password too short"),
-  // age: yup.number().positive().integer().required(),
+  username: yup.string().required("you need to insert your username"),
+  email: yup.string().email().required("you need to insert your email"),
+  password: yup.string().required("you need to insert your password").min(8,"password too short"),
 }).required();
 
-// react hook form
-const {register, handleSubmit, formState: {errors}, getValues } = useForm({
-  resolver: yupResolver(schema)
-})
+//for insert the data from form to global state (object data)
+const sendDataFormToZustand = useStore((state)=> state.setFormData)
 
 const onSubmit = data =>{
   console.log(data); 
+  sendDataFormToZustand(data)
+  changeScreen()
 }
 
-const SignUpForm = () => {
+  // react hook form
+  const {register, handleSubmit, formState: {errors} } = useForm({
+    resolver: yupResolver(schema)
+  })
+  
+  //for changing screen
+  const changeScreen = useStore((state)=> {return state.setScreen0to1})
+
+  //for showing password
+  const [showPassword, setShowPassword] = useState(false)
+  const handleClick = () => setShowPassword(!showPassword)
+
   return (
     <>
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -61,7 +80,7 @@ const SignUpForm = () => {
       </FormControl>
 
       <motion.div whileTap={{scale:0.9}}>
-        <Button width={'100%'}  colorScheme={`purple`} type={"submit"}  > Next </Button>
+        <Button width={'100%'}  colorScheme={`purple`} type={"submit"} > Next </Button>
         </motion.div>  
         </form>
       </>

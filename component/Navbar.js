@@ -1,14 +1,14 @@
 import Logo from "../component/ui/Logo"
-import React from "react"
+import React, { useState } from "react"
 import { Flex, Stack } from "@chakra-ui/react"
 import MenuToggle from "../component/ui/MenuToggle"
 import MenuItem from "./ui/MenuItem"
 import { motion } from "framer-motion"
-import ChakraLogo from "./ui/ChakraLogo"
 
 export default function Header () {
-  const [isOpen, setIsOpen] = React.useState(false)
 
+  //for icon in small medium 
+  const [isOpen, setIsOpen] = useState(false)
   const toggle = () => setIsOpen(!isOpen)
 
   return(
