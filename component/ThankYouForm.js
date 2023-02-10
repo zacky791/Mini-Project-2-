@@ -8,6 +8,7 @@ const ThankYouForm = () => {
 
   //for changing screen
   const changeHomeScreen = useStore((state)=> state.setscreen5to1)
+  
 
   return (
     <>

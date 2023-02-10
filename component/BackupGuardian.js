@@ -8,24 +8,17 @@ import useStore from "../util/useStore";
 
 const Guardian = () => {
 
-//.shape() = change any type into one type only
-//.array() = validate array
-//.of() = method. for specify schema for each items array ex: array().of(schema)
-//.shape() = define structure of object in much details
-
 //validation yup
-const schema = yup.object().shape({
-childs: yup.array().of(
-  yup.object().shape({
-    name: yup.string().required("You need to insert your name"),
-    age: yup.number().positive().integer().typeError('Age must be a valid number.').required("you need to insert your age"),
-    profilePicture: yup.mixed().test(
-      "profilePicture",
-      "Your need to upload picture and the file must be not exceed 5MB",
-      (value)=>{ 
-        return value && value[0] && !!value[0].size ? value[0].size <= 5000000 : true
+const schema = yup.object({
+name: yup.string().required("You need to insert your name"),
+age: yup.number().positive().integer().required("you need to insert your age"),
+profilepic: yup.mixed().test(
+  "profilepic",
+  "Your need to upload picture and the file must be not exceed 5MB",
+  (value)=>{ 
+    return value[0] && !!value[0].size ? value[0].size <= 5000000 : true
   }
-)})),
+),
 }).required();
 
 //for insert the data from form to global state (object data)
@@ -45,7 +38,8 @@ changeForwScreen()
 //for dynamic form
 const {fields, append, prepend, remove, swap, move, insert } = useFieldArray({
   control,
-  name: "childs", //unique name for field array
+  name: "cart", //for initial value must be mathcing with default values
+  profilePicture: ""
 })
 
 //for changing screen
@@ -61,6 +55,8 @@ console.log(e.target.files);
 setProfilePicture(URL.createObjectURL(e.target.files[0]));
 }
 
+const zack = [1,2,3]
+
 //for subsribe newsletter
 //FIXME - testing true or false
 const [newsletter, setNewsletter] = useState('0')
@@ -70,33 +66,49 @@ const [newsletter, setNewsletter] = useState('0')
     <form onSubmit={handleSubmit(onSubmit)}>
       
     <ul>
-  {fields.map((item, index) => (
-    console.log("inside item",item,index),
-    <li key={item.id}>
-      <FormControl isInvalid={errors.profilePicture} onChange={(e)=>{setProfilePicture(URL.createObjectURL(e.target.files[0]))}} >
-      <FormLabel>Insert your picture </FormLabel>
-      <Input mb={'4px'} type={'file'}  color={"black"}  focusBorderColor='lime' {...register(`childs.${index}.profilePicture`)} />
+        {fields.map((item, index) => (
+          <li key={item.id}>
+            <input {...register(`cart.${index}.firstName`)} />
+            <Controller
+              render={({ field }) => <input {...field} />}
+              name={`cart.${index}.lastName`}
+              control={control}
+            />
+            <button type="button" onClick={() => remove(index)}>Delete</button>
+          </li>
+        ))} <button
+        type="button"
+        onClick={() => append({ firstName: "Insert firstname", lastName: "Insert lastname" })}
+      >
+        AddUser
+      </button>
+      <input type="submit" />
+    </ul>
+    <FormControl isInvalid={errors.profilepic} onChange={(e)=>{setProfilePicture(URL.createObjectURL(e.target.files[0]))}} >
+    <FormLabel >Profile Picture</FormLabel>
+      <Input mb={'4px'} type={'file'}  color={"black"}  focusBorderColor='lime' {...register("profilepic")} />
+      <FormErrorMessage>{errors.profilepic && errors.profilepic.message}</FormErrorMessage> 
       </FormControl>
 
       <Flex justifyContent={"center"} alignItems={"center"}>
       <Image src={profilePicture}  />
       </Flex>  
 
-      <FormControl isInvalid={errors.childs?.[index]?.name} >
+      <FormControl isInvalid={errors.name} >
       <FormLabel >Name</FormLabel>
-      <Input borderRadius={"10px"} mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='lime' {...register(`childs.${index}.name`)}/>
-      <FormErrorMessage>{errors.childs?.[index]?.name?.message}</FormErrorMessage> 
+      <Input borderRadius={"10px"} mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='lime' {...register("name")}/>
+      <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage> 
       </FormControl>
 
-      <FormControl isInvalid={errors.childs?.[index]?.age} >
+      <FormControl isInvalid={errors.age} >
       <FormLabel >Age</FormLabel>
-      <Input borderRadius={"10px"} mb={'4px'} type={'number'} bg={'white'} color={"black"} focusBorderColor='lime' {...register(`childs.${index}.age`)}/>
-      <FormErrorMessage>{errors.childs?.[index]?.age?.message}</FormErrorMessage> 
+      <Input borderRadius={"10px"} mb={'4px'} type={'number'} bg={'white'} color={"black"} focusBorderColor='lime' {...register("age")}/>
+      <FormErrorMessage>{errors.age && errors.age.message}</FormErrorMessage> 
       </FormControl>
 
       <FormControl isInvalid={errors.gender} mb={"20px"}>
       <FormLabel >Gender</FormLabel>
-      <Select bg={"white"} borderRadius={"10px"} {...register(`childs.${index}.gender`)}>
+      <Select bg={"white"} borderRadius={"10px"} {...register("gender")}>
         <option>Male</option>
         <option>Female</option>
       </Select>
@@ -114,18 +126,12 @@ const [newsletter, setNewsletter] = useState('0')
       </RadioGroup>
       </FormControl>
 
-      <Button style={({backgroundColor:"red" , color:"white"})} mb={"15px"} onClick={() => remove(index)}>Delete</Button>
-          </li>
-        ))}
-       <Button mb={'20px'} onClick={() => append()}>AddUser</Button>
-    </ul>
-    <Container display={"flex"} justifyContent={"space-between"} alignItems={""}>
+      <Container display={"flex"} justifyContent={"space-between"} alignItems={""}>
       <motion.div whileTap={{scale:0.9}} onClick={changePrevScreen}>
         <Button width={'100%'} type={"submit"}  colorScheme={`gray`} > Back</Button>
       </motion.div>
         <Button width={'40%'}  colorScheme={`purple`} type={"submit"}  > Submit</Button>
       </Container> 
-      
       </form>
   </>
   )

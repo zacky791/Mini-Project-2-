@@ -31,18 +31,27 @@ export default function page () {
   // 15. be specific towards the handler for ex this handler handle what ?
   // 16. Hook must be called inside the componenet
   // 17. Everytime using arrow function and wrapped with function body {} its needed return statement
+  // 18. Invalid Hook call - should be inside body component only 
 
   //TODO - 
   // mistake not improve yet 6,11,14 !!! 
   // to display all the input using zustand as global state 
   // the dynamic platform that can add children from react hook form documentation 
-  // send activation link to email
   // change image(roles to pick) to button
 
+  //STUB - creating dynamic platform
+  // 1) Problem to understand the fundamental of it
+  // 2) problem with submitting multiple form but cant display it properly
+  // 3) when creating display form for dynamic causing other cannot display data 
+
+  //REVIEW - Bug
+  // back button from display part
+  // submit button lead to first page then homepage
+  // profile picture can display but when upload its same pic
+
+
+  //for changing screen
   const screen = useStore((state)=> state.screen)
-  
-  //for dark mode
-  const formBackground = useColorModeValue('purple.100' , 'purple.500')
 
   //change background image
   const backgroundImage = ["/assets/dino.webp","/assets/bear.webp","/assets/animal3.webp","/assets/forest1.webp","/assets/congrat3.webp","/assets/congrat3.webp"]
@@ -53,7 +62,7 @@ export default function page () {
     <>
     <Box bgImage={changeBackgroundImage} bgSize={'100%'} >  
     <Header/>
-    <Box bg={formBackground} borderRadius={"10px"} mb={"195px"} padding={'40px'}  borderWidth={'1px'} mt={'100px'} maxW={'500px'} mx={"auto"} display={'flex'} flexDirection={'column'}   >
+    <Box bg={'purple.100'} borderRadius={"10px"} mb={"195px"} padding={'40px'}  borderWidth={'1px'} mt={'100px'} maxW={'500px'} mx={"auto"} display={'flex'} flexDirection={'column'}   >
       <VStack>
            <Text fontWeight={'bold'} fontSize={'30px'} mb={"10px"}>Sign Up</Text>
       </VStack> 

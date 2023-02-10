@@ -10,9 +10,9 @@ const Tutor = () => {
 
 //validation yup
 const schema = yup.object({
-aboutme: yup.string().required("You need to write about yourself").min(15,"description too short , min character 15").max(40,"description too long , max character 40"),
-profilepic: yup.mixed().test(
-  "profilepic",
+aboutMe: yup.string().required("You need to write about yourself").min(15,"description too short , min character 15").max(40,"description too long , max character 40"),
+profilePicture: yup.mixed().test(
+  "profilePicture",
   "Your need to upload picture and the file must be not exceed 5MB",
   (value)=>{ 
     return value[0] && !!value[0].size ? value[0].size <= 5000000 : false
@@ -65,19 +65,19 @@ changeForwardScreen()
       <FormErrorMessage>{errors.experience && errors.experience.message}</FormErrorMessage> 
       </FormControl>
 
-      <FormControl isInvalid={errors.aboutme}>
+      <FormControl isInvalid={errors.aboutMe}>
        <FormLabel >About Me</FormLabel>
-       <Textarea borderRadius={"10px"} height={"90px"} mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='lime' {...register("aboutme")} />
-       <FormErrorMessage>{errors.aboutme && errors.aboutme.message}</FormErrorMessage> 
+       <Textarea borderRadius={"10px"} height={"90px"} mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='lime' {...register("aboutMe")} />
+       <FormErrorMessage>{errors.aboutMe?.message}</FormErrorMessage> 
        </FormControl>
 
-      <FormControl isInvalid={errors.profilepic} onChange={handleChange}>
+      <FormControl isInvalid={errors.profilePicture} onChange={handleChange}>
       <FormLabel >Profile Picture</FormLabel>
-      <Input borderRadius={"10px"} mb={'4px'} type={'file'}  color={"black"}  focusBorderColor='lime' {...register("profilepic")} />
+      <Input borderRadius={"10px"} mb={'4px'} type={'file'}  color={"black"}  focusBorderColor='lime' {...register("profilePicture")} />
        <Flex justifyContent={"center"} alignItems={"center"} mb={"15px"}>
       <Image src={profilePicture}  />
       </Flex>  
-      <FormErrorMessage>{errors.profilepic && errors.profilepic.message}</FormErrorMessage> 
+      <FormErrorMessage>{errors.profilePicture && errors.profilePicture.message}</FormErrorMessage> 
       </FormControl>
 
       <FormControl isInvalid={errors.newsletter}> 

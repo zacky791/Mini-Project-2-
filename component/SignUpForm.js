@@ -78,8 +78,7 @@ const onSubmit = data =>{
       </InputGroup>
         <FormErrorMessage mb={'10px'}>{errors.password && errors.password.message}</FormErrorMessage>
       </FormControl>
-
-      <motion.div whileTap={{scale:0.9}}>
+          <motion.div whileTap={{scale:0.9}}>
         <Button width={'100%'}  colorScheme={`purple`} type={"submit"} > Next </Button>
         </motion.div>  
         </form>
