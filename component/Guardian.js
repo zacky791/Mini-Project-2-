@@ -53,7 +53,7 @@ const changePrevScreen = useStore((state)=>{ return state.setScreen3to1})
 const changeForwScreen = useStore((state)=> state.setScreen3to4)
 
 //for display profile picture
-const [profilePicture, setProfilePicture] = useState()
+const [profilePicture, setProfilePicture] = useState([])
 
 //for display preview image
 function handleChange(e) {
@@ -63,7 +63,12 @@ setProfilePicture(URL.createObjectURL(e.target.files[0]));
 
 //for subsribe newsletter
 //FIXME - testing true or false
-const [newsletter, setNewsletter] = useState('0')
+const [newsletter, setNewsletter] = useState("yes")
+
+const handler = (e) => {
+  setNewsletter(e),
+  console.log('Zack',e)
+}
 
   return (
     <>
@@ -73,13 +78,16 @@ const [newsletter, setNewsletter] = useState('0')
   {fields.map((item, index) => (
     console.log("inside item",item,index),
     <li key={item.id}>
-      <FormControl isInvalid={errors.profilePicture} onChange={(e)=>{setProfilePicture(URL.createObjectURL(e.target.files[0]))}} >
+      <FormControl isInvalid={errors.profilePicture} onChange={(e)=>{
+        const presentProfilePicture = URL.createObjectURL(e.target.files[0])
+        setProfilePicture((prevPicture)=> [...prevPicture, presentProfilePicture]
+        )}} >
       <FormLabel>Insert your picture </FormLabel>
       <Input mb={'4px'} type={'file'}  color={"black"}  focusBorderColor='lime' {...register(`childs.${index}.profilePicture`)} />
       </FormControl>
 
       <Flex justifyContent={"center"} alignItems={"center"}>
-      <Image src={profilePicture}  />
+      <Image src={profilePicture?.[index]}  />
       </Flex>  
 
       <FormControl isInvalid={errors.childs?.[index]?.name} >
@@ -105,11 +113,11 @@ const [newsletter, setNewsletter] = useState('0')
 
       <FormControl >
       <FormLabel >Receive Newsletter</FormLabel>
-      <RadioGroup onChange={setNewsletter} value={newsletter} mb={"20px"}>
+      <RadioGroup onChange={handler} mb={"20px"}  focusBorderColor='lime' {...register(`childs.${index}.newsletter`)} >
         <Stack direction={"row"}>
           //FIXME - Try using booeleon 
-          <Radio value='0'>Yes</Radio>
-          <Radio value='1'>No</Radio>
+          <Radio value={"yes"}>Yes</Radio>
+          <Radio value={"no"}>No</Radio>
         </Stack>
       </RadioGroup>
       </FormControl>

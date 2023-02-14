@@ -6,7 +6,7 @@ import { create } from "zustand"
 const useStore = create((set) => ({
 
   //FIXME - how to make better optimization ?
-  screen: 1 ,
+  screen: 0 ,
   setScreen0to1: () => set((state) => ({screen: state.screen + 1 })),
   setScreen1to2: () => set((state) => ({screen: state.screen + 1 })),
   setScreen1to3: () => set((state) => ({screen: state.screen + 2 })),

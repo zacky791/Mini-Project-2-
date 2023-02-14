@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import { Button, Image } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 
-function ChakraNextLinkButton({ href, children,onClick, ...props }) {
+function ChakraNextLinkButton({ href, children, ...props }) {
     return (
       <Link href={href} passHref>
-        <Button {...props} onClick={onClick}>
+        <Button {...props} >
           {children}
         </Button>
       </Link>

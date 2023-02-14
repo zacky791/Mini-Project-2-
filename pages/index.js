@@ -3,11 +3,15 @@ import React  from "react";
 import ChakraNextLinkButton from "../component/ui/Button";
 import Header from "../component/Navbar";
 import Footer from "../component/Footer";
+import useStore from "../util/useStore";
 
 
 export default function SignUpForm() {
 
   {/* <Center width={"100%"} height={"100vh"} > */}
+
+  //for changing active screen
+  const changeHomeScreen = useStore((state)=> state.setscreen5to1)
 
   return (
     <>
@@ -19,7 +23,7 @@ export default function SignUpForm() {
         <HStack>  
           <Text fontWeight={'bold'} fontSize={"30px"} mb={"6px"}>Welcome To Homepage</Text>
         </HStack>
-      <ChakraNextLinkButton href={'/signup'} width={"355px"} fontWeight={'bold'}>Sign Up</ChakraNextLinkButton>
+      <ChakraNextLinkButton href={'/signup'} onClick={changeHomeScreen} width={"355px"} fontWeight={'bold'}>Sign Up</ChakraNextLinkButton>
       <ChakraNextLinkButton href={'/login'} width={"355px"} fontWeight={'bold'}>Login</ChakraNextLinkButton> 
       </VStack>
     </Box>

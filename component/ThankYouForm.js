@@ -15,7 +15,7 @@ const ThankYouForm = () => {
     <Text textAlign={"center"} fontWeight={"bold"} mb={"15px"}>Thank you for register under the CIC company 💕💖<br/>An activation link has been sent to their email 📧 </Text>
     <Center>
     <motion.div whileTap={{scale:0.9}} >
-        <ChakraNextLinkButton href={"/"} onClick={changeHomeScreen} colorScheme={"purple"}>Welcome</ChakraNextLinkButton>
+        <ChakraNextLinkButton href={"/"}  colorScheme={"purple"}>Welcome</ChakraNextLinkButton>
     </motion.div>
     </Center>
     </>

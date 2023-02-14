@@ -66,6 +66,8 @@ const DisplayData = () => {
         <Text>{`Name : ${data.name}`}</Text>
         <Text>{`Age : ${data.age}`}</Text>
         <Text>{`Gender : ${data.gender}`}</Text>
+        <Text>{`Newsletter : ${data.newsletter}`}</Text>
+
       </>
     )) : 
     <>
