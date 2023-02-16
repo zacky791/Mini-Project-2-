@@ -56,7 +56,7 @@ export default function page () {
     <Header/>
     <Box bg={'purple.100'} borderRadius={"10px"} mb={"195px"} padding={'40px'}  borderWidth={'1px'} mt={'100px'} maxW={'500px'} mx={"auto"} display={'flex'} flexDirection={'column'}   >
       <VStack>
-           <Text fontWeight={'bold'} fontSize={'30px'} mb={"10px"}>Sign Up</Text>
+           <Text fontWeight={'bold'} fontSize={'25px'} mb={"10px"}>Sign Up Leon Classroom </Text>
       </VStack> 
       { screen === 0 && <SignUpForm/>}
 
