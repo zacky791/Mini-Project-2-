@@ -6,10 +6,6 @@ import useStore from '../util/useStore'
 
 const ThankYouForm = () => {
 
-  //for changing screen
-  const changeHomeScreen = useStore((state)=> state.setscreen5to1)
-  
-
   return (
     <>
     <Text textAlign={"center"} fontWeight={"bold"} mb={"15px"}>Thank you for register under the CIC company 💕💖<br/>An activation link has been sent to their email 📧 </Text>

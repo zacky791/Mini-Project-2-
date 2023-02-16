@@ -11,7 +11,7 @@ export default function SignUpForm() {
   {/* <Center width={"100%"} height={"100vh"} > */}
 
   //for changing active screen
-  const changeHomeScreen = useStore((state)=> state.setscreen5to1)
+  const changeHomeScreen = useStore((state)=> state.setScreenTo0)
 
   return (
     <>

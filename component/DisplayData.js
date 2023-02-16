@@ -23,8 +23,8 @@ import ForDataDisplay from './ui/ForDisplayData';
 const DisplayData = () => {
 
   //for changing screen
-  const changeScreenPrev = useStore((state)=> state.setScreen4to3)
-  const changeScreenForw = useStore((state)=> state.setScreen4to5)
+  const changeScreenPrev = useStore((state)=> state.setScreenTo3)
+  const changeScreenForw = useStore((state)=> state.setScreenTo5)
 
   //for display data from form to global state (object data)
   const getDataFormToZustand = useStore((state)=> { 

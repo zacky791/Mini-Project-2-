@@ -36,7 +36,7 @@ const onSubmit = data =>{
   })
   
   //for changing screen
-  const changeScreen = useStore((state)=> {return state.setScreen0to1})
+  const changeScreen = useStore((state)=> {return state.setScreenTo1})
 
   //for showing password
   const [showPassword, setShowPassword] = useState(false)

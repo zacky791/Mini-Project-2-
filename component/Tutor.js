@@ -26,8 +26,8 @@ setProfilePicture(URL.createObjectURL(e.target.files[0]));
  }
 
 //for changing screen
-const changePrevScreen = useStore((state)=>state.setScreen2to1)
-const changeForwardScreen = useStore((state)=> {return state.setScreen2to4})
+const changePrevScreen = useStore((state)=>state.setScreenTo1)
+const changeForwardScreen = useStore((state)=> {return state.setScreenTo4})
 
 //for subsribe newsletter
 //FIXME - testing true or false

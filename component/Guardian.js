@@ -2,7 +2,7 @@ import { Button, Input, FormLabel, FormControl, FormErrorMessage, Container, Sel
 import React, { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { motion } from "framer-motion"
 import useStore from "../util/useStore";
 
@@ -49,8 +49,8 @@ const {fields, append, prepend, remove, swap, move, insert } = useFieldArray({
 })
 
 //for changing screen
-const changePrevScreen = useStore((state)=>{ return state.setScreen3to1})
-const changeForwScreen = useStore((state)=> state.setScreen3to4)
+const changePrevScreen = useStore((state)=>{ return state.setScreenTo1})
+const changeForwScreen = useStore((state)=> state.setScreenTo4)
 
 //for display profile picture
 const [profilePicture, setProfilePicture] = useState([])
