@@ -5,20 +5,7 @@ import { create } from "zustand"
 
 const useStore = create((set) => ({
 
-  //FIXME - how to make better optimization ?
   screen: 0 ,
-  // setScreen0to1: () => set((state) => ({screen: state.screen + 1 })),
-  // setScreen1to2: () => set((state) => ({screen: state.screen + 1 })),
-  // setScreen1to3: () => set((state) => ({screen: state.screen + 2 })),
-  // setScreen2to1: () => set((state) => ({screen: state.screen - 1 })),
-  // setScreen3to1: () => set((state) => ({screen: state.screen - 2 })),
-  // setScreen2to4: () => set((state) => ({screen: state.screen + 2 })),
-  // setScreen3to4: () => set((state) => ({screen: state.screen + 1 })),
-  // setScreen4to2: () => set((state) => ({screen: state.screen - 2 })),
-  // setScreen4to3: () => set((state) => ({screen: state.screen - 1 })),  //check back is it use or not ?
-  // setScreen4to5: () => set((state) => ({screen: state.screen + 1 })),
-  // setscreen5to1: () => set((state) => ({screen: state.screen - 5 })),
-
   setScreenTo0: () => set((state) => ({screen: state.screen = 0 })),
   setScreenTo1: () => set((state) => ({screen: state.screen = 1 })),
   setScreenTo2: () => set((state) => ({screen: state.screen = 2 })),

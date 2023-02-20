@@ -61,13 +61,11 @@ const DisplayData = () => {
         <Text>{`Child ${i+1}`}</Text>
         <Text>{`Profile Picture :  `}</Text>
         <Flex justifyContent={"center"} alignItems={"center"}>
-          <Image src={URL.createObjectURL(new Blob(data.profilePicture))}/>
+          <Image src={URL.createObjectURL(new Blob(data.profilePicture))} borderRadius={"10px"}/>
         </Flex>  
         <Text>{`Name : ${data.name}`}</Text>
         <Text>{`Age : ${data.age}`}</Text>
         <Text>{`Gender : ${data.gender}`}</Text>
-        <Text>{`Newsletter : ${data.newsletter}`}</Text>
-
       </>
     )) : 
     <>

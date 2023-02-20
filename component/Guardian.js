@@ -1,4 +1,4 @@
-import { Button, Input, FormLabel, FormControl, FormErrorMessage, Container, Select, RadioGroup, Stack, Radio, Image, Flex, } from "@chakra-ui/react"
+import { Button, Input, FormLabel, FormControl, FormErrorMessage, Container, Select, RadioGroup, Stack, Radio, Image, Flex, VStack, Checkbox, Box, } from "@chakra-ui/react"
 import React, { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -15,10 +15,14 @@ const Guardian = () => {
 
 //validation yup
 const schema = yup.object().shape({
+
+parentChildName: yup.string().required("You need to insert parent child name"),
+
 childs: yup.array().of(
   yup.object().shape({
-    name: yup.string().required("You need to insert your name"),
-    age: yup.number().positive().integer().typeError('Age must be a valid number.').required("you need to insert your age"),
+    name: yup.string().required("You need to insert your child name"),
+    age: yup.string().required("Age is required"),
+    gender: yup.string().required("Gender is required"),
     profilePicture: yup.mixed().test(
       "profilePicture",
       "Your need to upload picture and the file must be not exceed 5MB",
@@ -55,26 +59,28 @@ const changeForwScreen = useStore((state)=> state.setScreenTo4)
 //for display profile picture
 const [profilePicture, setProfilePicture] = useState([])
 
-//for display preview image
-function handleChange(e) {
-console.log(e.target.files);
-setProfilePicture(URL.createObjectURL(e.target.files[0]));
-}
+//for handling loop age
+//array.from create a new, shallow-copied Array instance from an iterable or array-like object. so it can be loop (element,index)
+const ageOptions = Array.from({ length: 12 }, (_, index) => index + 1);
 
-//for subsribe newsletter
-//FIXME - testing true or false
-const [newsletter, setNewsletter] = useState("yes")
-
-const handler = (e) => {
-  setNewsletter(e),
-  console.log('Zack',e)
-}
+//test
+const [storePic,useStorePic] = useState([])
 
   return (
     <>
     <form onSubmit={handleSubmit(onSubmit)}>
+
+    <FormControl isInvalid={errors.parentChildName} mb={"10px"} >
+      <FormLabel > Parent Child Name </FormLabel>
+      <Input borderRadius={"10px"} mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='purple.600' {...register(`parentChildName`)}/>
+      <FormErrorMessage>{errors.parentChildName?.message}</FormErrorMessage> 
+    </FormControl>
+
+  <Checkbox colorScheme='purple' defaultChecked {...register(`newsletter`)} mb={"15px"}>
+    Receive Newsletter
+  </Checkbox>
       
-    <ul>
+    <ul style={{listStyle:"none"}} >
   {fields.map((item, index) => (
     console.log("inside item",item,index),
     <li key={item.id}>
@@ -82,57 +88,65 @@ const handler = (e) => {
         const presentProfilePicture = URL.createObjectURL(e.target.files[0])
         setProfilePicture((prevPicture)=> [...prevPicture, presentProfilePicture]
         )}} >
-      <FormLabel>Insert your picture </FormLabel>
-      <Input mb={'4px'} type={'file'}  color={"black"}  focusBorderColor='lime' {...register(`childs.${index}.profilePicture`)} />
+  
+      {/* <Button as="label" htmlFor="file-input" color={"purple.500"} border={"2px"} borderColor={"purple.500"} width={"100%"}>Upload Picture</Button> */}
+      {/* <Input mb={'4px'} id="file-input" type={'file'} focusBorderColor='purple.600' accept=".jpg,.jpeg,.png" {...register(`childs.${index}.profilePicture`)} style={{ display: "none" }} 
+      onChange={(e)=>{ 
+        const file = e.target.value
+        useStorePic((pastData)=> [...pastData,file])
+        console.log("dalam event", e , "dalam newdata" , storePic , "dalam file",file)
+      }}
+      /> */}
+       <Input mb={'4px'} id="file-input" type={'file'}  color={"black"}  focusBorderColor='lime' {...register(`childs.${index}.profilePicture`)} />
       </FormControl>
 
       <Flex justifyContent={"center"} alignItems={"center"}>
-      <Image src={profilePicture?.[index]}  />
+      <Image src={profilePicture?.[index]} borderRadius={"10px"} />
       </Flex>  
 
       <FormControl isInvalid={errors.childs?.[index]?.name} >
       <FormLabel >Name</FormLabel>
-      <Input borderRadius={"10px"} mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='lime' {...register(`childs.${index}.name`)}/>
+      <Input borderRadius={"10px"} mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='purple.600' {...register(`childs.${index}.name`)}/>
       <FormErrorMessage>{errors.childs?.[index]?.name?.message}</FormErrorMessage> 
       </FormControl>
 
-      <FormControl isInvalid={errors.childs?.[index]?.age} >
+      <Flex justifyContent={"space-between"}>
+      <FormControl isInvalid={errors.childs?.[index]?.age} width={"190px"} >
       <FormLabel >Age</FormLabel>
-      <Input borderRadius={"10px"} mb={'4px'} type={'number'} bg={'white'} color={"black"} focusBorderColor='lime' {...register(`childs.${index}.age`)}/>
+      <Select bg={"white"} borderRadius={"10px"} {...register(`childs.${index}.age`)} placeholder={"select"} focusBorderColor='purple.600'>
+      {ageOptions.map((age) => (
+          <option key={age} value={age}>
+            {age}
+          </option>
+        ))}
+      </Select>
       <FormErrorMessage>{errors.childs?.[index]?.age?.message}</FormErrorMessage> 
       </FormControl>
-
-      <FormControl isInvalid={errors.gender} mb={"20px"}>
-      <FormLabel >Gender</FormLabel>
-      <Select bg={"white"} borderRadius={"10px"} {...register(`childs.${index}.gender`)}>
+      
+      <FormControl isInvalid={errors.childs?.[index]?.gender} mb={"20px"} width={"190px"}>
+      <FormLabel >Monkey</FormLabel>
+      <Select bg={"white"} borderRadius={"10px"} {...register(`childs.${index}.gender`)}placeholder={"select"} focusBorderColor='purple.600'>
         <option>Male</option>
         <option>Female</option>
       </Select>
-      <FormErrorMessage>{errors.gender && errors.gender.message}</FormErrorMessage> 
+      <FormErrorMessage>{errors.childs?.[index]?.gender?.message}</FormErrorMessage> 
       </FormControl>
-
-      <FormControl >
-      <FormLabel >Receive Newsletter</FormLabel>
-      <RadioGroup onChange={handler} mb={"20px"}  focusBorderColor='lime' {...register(`childs.${index}.newsletter`)} >
-        <Stack direction={"row"}>
-          //FIXME - Try using booeleon 
-          <Radio value={"yes"}>Yes</Radio>
-          <Radio value={"no"}>No</Radio>
-        </Stack>
-      </RadioGroup>
-      </FormControl>
+      </Flex>
 
       <Button style={({backgroundColor:"red" , color:"white"})} mb={"15px"} onClick={() => remove(index)}>Delete</Button>
           </li>
         ))}
-       <Button mb={'20px'} onClick={() => append()}>AddUser</Button>
+        <VStack>
+       <Button mb={'20px'} onClick={() => append()} width={"100%"} color={"purple.500"} fontWeight={"extrabold"} border={"2px"} borderColor={"purple.500"} >Add Child</Button>
+       </VStack> 
     </ul>
+    
     <Container display={"flex"} justifyContent={"space-between"} alignItems={""}>
       <motion.div whileTap={{scale:0.9}} onClick={changePrevScreen}>
-        <Button width={'100%'} type={"submit"}  colorScheme={`gray`} > Back</Button>
+        <Button width={'100%'} type={"submit"}  colorScheme={`gray`}>Back</Button>
       </motion.div>
-        <Button width={'40%'}  colorScheme={`purple`} type={"submit"}  > Submit</Button>
-      </Container> 
+        <Button width={'40%'}  colorScheme={`purple`} type={"submit"}>Submit</Button>
+    </Container> 
       
       </form>
   </>

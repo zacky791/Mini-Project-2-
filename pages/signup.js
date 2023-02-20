@@ -10,7 +10,7 @@ import DisplayData from "../component/DisplayData";
 import useStore from "../util/useStore";
 import ThankYouForm from "../component/thankYouForm";
 
-export default function page () {
+export default function Page () {
 
   //Mistake for this project for improvement
   // 1. Needed to compress the pic and vid (10mb) to svg or .webp since it fall under 
