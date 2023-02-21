@@ -1,4 +1,4 @@
-import { Button, Input, FormLabel, FormControl, FormErrorMessage, Container, Select, RadioGroup, Stack, Radio, Textarea, Image, Flex } from "@chakra-ui/react"
+import { Button, Input, FormLabel, FormControl, FormErrorMessage, Container, Select, RadioGroup, Stack, Radio, Textarea, Image, Flex, Checkbox } from "@chakra-ui/react"
 import React, { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -10,7 +10,7 @@ const Tutor = () => {
 
 //validation yup
 const schema = yup.object({
-aboutMe: yup.string().required("You need to write about yourself").min(15,"description too short , min character 15").max(40,"description too long , max character 40"),
+aboutMe: yup.string().required("You need to write about yourself").min(15,"description too short , min character 15").max(350,"description too long , max character 350"),
 profilePicture: yup.mixed().test(
   "profilePicture",
   "Your need to upload picture and the file must be not exceed 5MB",
@@ -52,7 +52,14 @@ changeForwardScreen()
    return (
     <>
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormControl isInvalid={errors.experience}>
+
+      <FormControl isInvalid={errors.name} >
+      <FormLabel >Name</FormLabel>
+      <Input borderRadius={"10px"} mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='purple.600' {...register(`name`)}/>
+      <FormErrorMessage>{errors.name?.message}</FormErrorMessage> 
+      </FormControl>
+
+      <FormControl isInvalid={errors.experience} mb={"15px"}>
       <FormLabel >Years Of Teaching Experience</FormLabel>
       <Select bg={"white"} borderRadius={"10px"} {...register("experience")}>
         <option>None</option>
@@ -73,22 +80,17 @@ changeForwardScreen()
 
       <FormControl isInvalid={errors.profilePicture} onChange={handleChange}>
       <FormLabel >Profile Picture</FormLabel>
-      <Input borderRadius={"10px"} mb={'4px'} type={'file'}  color={"black"}  focusBorderColor='lime' {...register("profilePicture")} />
+      <Button as="label" htmlFor={`file-input`} color={"purple.500"} border={"2px"} borderColor={"purple.500"} width={"100%"} mb={"15px"}>Upload Picture</Button>
+      <Input mb={'4px'} id={`file-input`} type={'file'} focusBorderColor='purple.600' accept=".jpg,.jpeg,.png" {...register("profilePicture")} style={{ display: "none" }} />
        <Flex justifyContent={"center"} alignItems={"center"} mb={"15px"}>
       <Image src={profilePicture}  />
       </Flex>  
       <FormErrorMessage>{errors.profilePicture && errors.profilePicture.message}</FormErrorMessage> 
       </FormControl>
 
-      <FormControl isInvalid={errors.newsletter}> 
-      <FormLabel >Do You Want To Receive Newsletter</FormLabel>
-      <RadioGroup onChange={setNewsletter} value={newsletter} mb={"20px"} {...register("newsletter" )}>
-        <Stack direction={"row"}>
-          <Radio value= "0" >Yes</Radio>
-          <Radio value= "1" >No</Radio>
-        </Stack>
-      </RadioGroup>
-      </FormControl>
+      <Checkbox colorScheme='purple' defaultChecked {...register(`newsletter`)} mb={"15px"}>
+       Receive Newsletter
+      </Checkbox>
 
       <Container display={"flex"} justifyContent={"space-between"}>
       <motion.div whileTap={{scale:0.9}} onClick={changePrevScreen}>

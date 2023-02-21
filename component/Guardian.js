@@ -1,10 +1,13 @@
 import { Button, Input, FormLabel, FormControl, FormErrorMessage, Container, Select, RadioGroup, Stack, Radio, Image, Flex, VStack, Checkbox, Box, } from "@chakra-ui/react"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useFieldArray, useForm } from "react-hook-form";
 import { motion } from "framer-motion"
 import useStore from "../util/useStore";
+import AddPhotoIcon from '@mui/icons-material/AddAPhoto';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+
 
 const Guardian = () => {
 
@@ -66,12 +69,25 @@ const ageOptions = Array.from({ length: 12 }, (_, index) => index + 1);
 //test
 const [storePic,useStorePic] = useState([])
 
+const nama = () =>{
+  console.log(profilePicture)
+}
+
+// useEffect(()=>{
+//   if (profilePicture[index]) {
+//     const url = URL.createObjectURL(profilePicture[index]);
+//     setPreviewImage(url);
+//   } else {
+//     setPreviewImage(null);
+//   }
+// }, [profilePicture[index]]);
+
   return (
     <>
     <form onSubmit={handleSubmit(onSubmit)}>
 
     <FormControl isInvalid={errors.parentChildName} mb={"10px"} >
-      <FormLabel > Parent Child Name </FormLabel>
+      <FormLabel > Name </FormLabel>
       <Input borderRadius={"10px"} mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='purple.600' {...register(`parentChildName`)}/>
       <FormErrorMessage>{errors.parentChildName?.message}</FormErrorMessage> 
     </FormControl>
@@ -80,28 +96,23 @@ const [storePic,useStorePic] = useState([])
     Receive Newsletter
   </Checkbox>
       
-    <ul style={{listStyle:"none"}} >
+
   {fields.map((item, index) => (
     console.log("inside item",item,index),
-    <li key={item.id}>
-      <FormControl isInvalid={errors.profilePicture} onChange={(e)=>{
+    <>
+      <FormControl key={item.id} isInvalid={errors.profilePicture} onChange={(e)=>{
         const presentProfilePicture = URL.createObjectURL(e.target.files[0])
         setProfilePicture((prevPicture)=> [...prevPicture, presentProfilePicture]
-        )}} >
-  
-      {/* <Button as="label" htmlFor="file-input" color={"purple.500"} border={"2px"} borderColor={"purple.500"} width={"100%"}>Upload Picture</Button> */}
-      {/* <Input mb={'4px'} id="file-input" type={'file'} focusBorderColor='purple.600' accept=".jpg,.jpeg,.png" {...register(`childs.${index}.profilePicture`)} style={{ display: "none" }} 
-      onChange={(e)=>{ 
-        const file = e.target.value
-        useStorePic((pastData)=> [...pastData,file])
-        console.log("dalam event", e , "dalam newdata" , storePic , "dalam file",file)
-      }}
-      /> */}
-       <Input mb={'4px'} id="file-input" type={'file'}  color={"black"}  focusBorderColor='lime' {...register(`childs.${index}.profilePicture`)} />
+        )}} mb={"15px"} >
+
+      <Button as="label" htmlFor={`file-input ${index}`} color={"blue.500"} border={"2px"} borderColor={"blue.500"} width={"100%"}><AddPhotoIcon fontSize="small"/> Upload Picture </Button>
+      <Input mb={'4px'} id={`file-input ${index}`} type={'file'} focusBorderColor='purple.600' accept=".jpg,.jpeg,.png" {...register(`childs.${index}.profilePicture`)} style={{ display: "none" }} />
+       {/* <Input mb={'4px'} id="file-input" type={'file'}  color={"black"}  focusBorderColor='lime' {...register(`childs.${index}.profilePicture`)} /> */}
       </FormControl>
 
       <Flex justifyContent={"center"} alignItems={"center"}>
-      <Image src={profilePicture?.[index]} borderRadius={"10px"} />
+      {/* //FIXME - when upload 2 times it does not replace picture */}
+      <Image src={profilePicture?.[index]} borderRadius={"10px"}  />
       </Flex>  
 
       <FormControl isInvalid={errors.childs?.[index]?.name} >
@@ -124,7 +135,7 @@ const [storePic,useStorePic] = useState([])
       </FormControl>
       
       <FormControl isInvalid={errors.childs?.[index]?.gender} mb={"20px"} width={"190px"}>
-      <FormLabel >Monkey</FormLabel>
+      <FormLabel >Gender</FormLabel>
       <Select bg={"white"} borderRadius={"10px"} {...register(`childs.${index}.gender`)}placeholder={"select"} focusBorderColor='purple.600'>
         <option>Male</option>
         <option>Female</option>
@@ -134,12 +145,11 @@ const [storePic,useStorePic] = useState([])
       </Flex>
 
       <Button style={({backgroundColor:"red" , color:"white"})} mb={"15px"} onClick={() => remove(index)}>Delete</Button>
-          </li>
+        </>
         ))}
         <VStack>
-       <Button mb={'20px'} onClick={() => append()} width={"100%"} color={"purple.500"} fontWeight={"extrabold"} border={"2px"} borderColor={"purple.500"} >Add Child</Button>
+       <Button mb={'20px'} onClick={() => append()} width={"100%"} color={"purple.500"} fontWeight={"extrabold"} border={"2px"} borderColor={"purple.500"} > <PersonAddIcon fontSize="small"/> Add Child  </Button>
        </VStack> 
-    </ul>
     
     <Container display={"flex"} justifyContent={"space-between"} alignItems={""}>
       <motion.div whileTap={{scale:0.9}} onClick={changePrevScreen}>
@@ -147,7 +157,6 @@ const [storePic,useStorePic] = useState([])
       </motion.div>
         <Button width={'40%'}  colorScheme={`purple`} type={"submit"}>Submit</Button>
     </Container> 
-      
       </form>
   </>
   )
