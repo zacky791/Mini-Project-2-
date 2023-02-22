@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion"
 import useStore from "../util/useStore";
+import AddPhotoIcon from '@mui/icons-material/AddAPhoto';
 
 const Tutor = () => {
 
@@ -29,9 +30,8 @@ setProfilePicture(URL.createObjectURL(e.target.files[0]));
 const changePrevScreen = useStore((state)=>state.setScreenTo1)
 const changeForwardScreen = useStore((state)=> {return state.setScreenTo4})
 
-//for subsribe newsletter
-//FIXME - testing true or false
-const [newsletter, setNewsletter] = useState("0")
+//reset the form
+const resetFields = useStore((state) => state.resetFields)
 
 //for display profile picture
 const [profilePicture, setProfilePicture] = useState()
@@ -59,9 +59,9 @@ changeForwardScreen()
       <FormErrorMessage>{errors.name?.message}</FormErrorMessage> 
       </FormControl>
 
-      <FormControl isInvalid={errors.experience} mb={"15px"}>
+      <FormControl isInvalid={errors.experience} mb={"15px"} >
       <FormLabel >Years Of Teaching Experience</FormLabel>
-      <Select bg={"white"} borderRadius={"10px"} {...register("experience")}>
+      <Select bg={"white"} borderRadius={"10px"} {...register("experience")} focusBorderColor='purple.600'>
         <option>None</option>
         <option>1</option>
         <option>2</option>
@@ -74,13 +74,13 @@ changeForwardScreen()
 
       <FormControl isInvalid={errors.aboutMe}>
        <FormLabel >About Me</FormLabel>
-       <Textarea borderRadius={"10px"} height={"90px"} mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='lime' {...register("aboutMe")} />
+       <Textarea borderRadius={"10px"} height={"90px"} mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='purple.600' {...register("aboutMe")} />
        <FormErrorMessage>{errors.aboutMe?.message}</FormErrorMessage> 
        </FormControl>
 
       <FormControl isInvalid={errors.profilePicture} onChange={handleChange}>
       <FormLabel >Profile Picture</FormLabel>
-      <Button as="label" htmlFor={`file-input`} color={"purple.500"} border={"2px"} borderColor={"purple.500"} width={"100%"} mb={"15px"}>Upload Picture</Button>
+      <Button as="label" htmlFor={`file-input`} color={"purple.500"} border={"2px"} borderColor={"purple.500"} width={"100%"} mb={"15px"}> <AddPhotoIcon fontSize="small" style={{marginRight: "8px"}}/> Upload Picture</Button>
       <Input mb={'4px'} id={`file-input`} type={'file'} focusBorderColor='purple.600' accept=".jpg,.jpeg,.png" {...register("profilePicture")} style={{ display: "none" }} />
        <Flex justifyContent={"center"} alignItems={"center"} mb={"15px"}>
       <Image src={profilePicture}  />
@@ -94,7 +94,7 @@ changeForwardScreen()
 
       <Container display={"flex"} justifyContent={"space-between"}>
       <motion.div whileTap={{scale:0.9}} onClick={changePrevScreen}>
-        <Button width={'100%'} colorScheme={`gray`} > Back</Button>
+        <Button width={'100%'} colorScheme={`gray`} onClick={resetFields} > Back</Button>
       </motion.div>
         <Button width={'40%'}  colorScheme={`purple`} type={"submit"} > Submit</Button>
       </Container>  

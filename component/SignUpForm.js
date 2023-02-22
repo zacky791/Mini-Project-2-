@@ -5,6 +5,8 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion"
 import  useStore  from "../util/useStore";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 //REVIEW - 
 // need to make logic pass the validation scehama first then can change page
@@ -71,12 +73,13 @@ const onSubmit = data =>{
       />
         
       <InputRightElement width={'80px'}>
-        <Button bg={"purple.100"} h={'27px'} size={'sm'} onClick={handleClick}>
-          {showPassword ? 'Hide' : 'Show'}
+        <Button bg={"purple.100"} h={'27px'} size={'md'} onClick={handleClick}>
+        {showPassword ? <RemoveRedEyeIcon color="disabled"/>: <VisibilityOffIcon/> }  
+        {/* {showPassword ? 'Hide' : 'Show'} */}
         </Button>
       </InputRightElement>
       </InputGroup>
-        <FormErrorMessage mb={'10px'}>{errors.password && errors.password.message}</FormErrorMessage>
+        <FormErrorMessage mb={'10px'}> {errors.password && errors.password.message} </FormErrorMessage>
       </FormControl>
           <motion.div whileTap={{scale:0.9}}>
         <Button width={'100%'}  colorScheme={`purple`} type={"submit"} > Next </Button>

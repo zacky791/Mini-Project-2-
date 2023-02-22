@@ -2,6 +2,7 @@ import React, { use, useState } from 'react'
 import { Button, Container, Flex, Image, Text, Toast, useToast, Heading, Avatar, Box, Center, Stack, useColorModeValue, VStack, } from "@chakra-ui/react"
 import { motion } from "framer-motion"
 import useStore from '../util/useStore';
+import { useForm } from 'react-hook-form';
 
 
 //FIXME - error on preview picture , too many re render !!!
@@ -23,8 +24,12 @@ import useStore from '../util/useStore';
 const DisplayData = () => {
 
   //for changing screen
-  const changeScreenPrev = useStore((state)=> state.setScreenTo3)
+  const changeScreenToGuardian = useStore((state)=> state.setScreenTo2)
+  const changeScreenToTutor = useStore((state)=> state.setScreenTo3)
   const changeScreenForw = useStore((state)=> state.setScreenTo5)
+
+  //reset the form
+  const resetFields = useStore((state) => state.resetFields)
 
   //for display data from form to global state (object data)
   const getDataFormToZustand = useStore((state)=> { 
@@ -48,61 +53,62 @@ const DisplayData = () => {
 
   //for combine two function so that both triggered when button was click
   const forwardScreenAndPopup = () => {
-    popup(),
-    changeScreenForw()
+    popup();
+    changeScreenForw();
+    resetFields()
   }
 
   return (
     <>
     { getDataFormToZustand.childs ?
       <VStack>
-    <Heading>{getDataFormToZustand.parentChildName} Family</Heading>
+    <Heading fontSize={"20px"}>{getDataFormToZustand.guardianName} Family 👨‍👩‍👧‍👦 </Heading>
      </VStack> : null 
      }
 
     { getDataFormToZustand.childs ? getDataFormToZustand.childs.map((data, i) => (
       <>
-      <Center py={6}>
-      <Box maxW={'270px'} w={'full'} bg={useColorModeValue('white', 'gray.800')} boxShadow={'2xl'} rounded={'md'} overflow={'hidden'}>
+      <Center py={"20px"}>
+      <Box maxW={'270px'} w={'full'} bg={ data.gender !== "Male" ? "pink.200":"purple.200"} boxShadow={'2xl'} rounded={'md'} overflow={'hidden'}>
         <Image h={'120px'} w={'full'} objectFit={'cover'} src={
-            'https://images.unsplash.com/photo-1612865547334-09cb8cb455da?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'}
+            'https://img.freepik.com/premium-vector/cute-lion-tiger-couple-with-love-heart-tail-cartoon-vector-icon-illustration-animal-nature-icon_138676-5003.jpg?w=740'}
         />
-        <Flex justify={'center'} mt={-12}>
+        <Flex justify={'center'} mt={"-50px"}>
           <Avatar size={'xl'} src={URL.createObjectURL(new Blob(data.profilePicture))} alt={'Author'} css={{
               border: '2px solid white',
             }}
           />
         </Flex>
 
-        <Box p={6}>
-          <Stack spacing={0} align={'center'} mb={5}>
+        <Box p={"26px"}>
+          <Stack spacing={0} align={'center'} mb={"20px"}>
+            <Text color={'gray.500'} >Name</Text>
             <Heading fontSize={'2xl'} fontWeight={500} fontFamily={'body'}>
               {data.name}
             </Heading>
-            <Text color={'gray.500'}>Name</Text>
           </Stack>
 
-          <Stack direction={'row'} justify={'center'} spacing={6}>
+          <Stack direction={'row'} justify={'center'} spacing={"46px"}>
             <Stack spacing={0} align={'center'}>
-              <Text fontWeight={600}>{data.age}</Text>
               <Text fontSize={'sm'} color={'gray.500'}>
                 Age
               </Text>
+              <Text fontWeight={600}>{data.age}</Text>
             </Stack>
             <Stack spacing={0} align={'center'}>
-              <Text fontWeight={600}>{data.gender}</Text>
               <Text fontSize={'sm'} color={'gray.500'}>
                 Gender
               </Text>
+              <Text fontWeight={600}>{data.gender}</Text>
             </Stack>
           </Stack>
-
-          <Button w={'full'} mt={8} bg={useColorModeValue('purple.500', 'gray.900')} color={'white'} rounded={'md'} _hover={{
-              transform: 'translateY(-2px)',
-              boxShadow: 'lg',
-            }}>
-            Confirm
-          </Button>
+  
+            <Button w={'full'} mt={"30px"} bg={'purple.500'} color={'white'} rounded={'md'} _hover={{
+                transform: 'translateY(-2px)',
+                boxShadow: 'lg',
+              }}>
+              Confirm
+            </Button>
         </Box>
       </Box>
     </Center>
@@ -121,10 +127,10 @@ const DisplayData = () => {
       </>
     )) : 
     <>
-    <Center py={6}>
-      <Box maxW={'270px'} w={'full'} bg={useColorModeValue('white', 'gray.800')} boxShadow={'2xl'} rounded={'md'} overflow={'hidden'}>
+    <Center py={"20px"}>
+      <Box maxW={'270px'} w={'full'} bg={'white'} boxShadow={'2xl'} rounded={'md'} overflow={'hidden'}>
         <Image h={'120px'} w={'full'} objectFit={'cover'} src={
-            'https://images.unsplash.com/photo-1612865547334-09cb8cb455da?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80'}
+            'https://img.freepik.com/free-vector/cute-crocodile-holding-book-school-cartoon-vector-icon-illustration-animal-education-icon-isolated_138676-4902.jpg?w=740&t=st=1676966366~exp=1676966966~hmac=e4b06a047e7aa46a36de44a3340eeda67da6a12176b1088f4c6725983c39b542'}
         />
         <Flex justify={'center'} mt={-12}>
           <Avatar size={'xl'} src={URL.createObjectURL(new Blob(getDataFormToZustand.profilePicture))} alt={'Author'} css={{
@@ -133,15 +139,15 @@ const DisplayData = () => {
           />
         </Flex>
 
-        <Box p={6}>
-          <Stack spacing={0} align={'center'} mb={5}>
+        <Box p={"20px"}>
+          <Stack spacing={0} align={'center'} mb={"25px"}>
             <Text color={'gray.500'}>Name</Text>
             <Heading fontSize={'2xl'} fontWeight={500} fontFamily={'body'}>
               {getDataFormToZustand.name}
             </Heading>
           </Stack>
 
-          <Stack direction={'row'} justify={'center'} spacing={6} mb={4}>
+          <Stack direction={'row'} justify={'center'} spacing={"16px"} mb={"15px"}>
             <Stack spacing={0} align={'center'}>
               <Text fontSize={'sm'} color={'gray.500'}>
                 Years of Experience
@@ -150,11 +156,13 @@ const DisplayData = () => {
             </Stack>
           </Stack>
 
-          <Stack spacing={0} align={'center'} mb={5}>
+          <Stack spacing={0} align={'center'} mb={"20px"}>
             <Text color={'gray.500'}>About Me</Text>
-            <Text fontSize={"small"} fontWeight={500} fontFamily={'body'}>
+            <Box>
+            <Text fontSize={"small"} fontWeight={500} fontFamily={'body'} wordBreak="break-word">
               {getDataFormToZustand.aboutMe}
             </Text>
+            </Box>
           </Stack>
 
           {/* <Button w={'full'} mt={8} bg={useColorModeValue('purple.500', 'gray.900')} color={'white'} rounded={'md'} _hover={{
@@ -180,10 +188,10 @@ const DisplayData = () => {
     }  
     
     <Container display={"flex"} justifyContent={"space-between"} mt={"20px"}>
-    <motion.div whileTap={{scale:0.9}} onClick={changeScreenPrev}>
-      <Button width={'100%'} type={"submit"}  colorScheme={`gray`} > Back</Button>
+    <motion.div whileTap={{scale:0.9}} onClick={ getDataFormToZustand.childs ? changeScreenToTutor : changeScreenToGuardian }>
+      <Button width={'100%'}  colorScheme={`gray`} > Back</Button>
     </motion.div>
-      <Button width={'40%'}  colorScheme={`purple`} onClick={ forwardScreenAndPopup } > Submit</Button>
+      <Button width={'40%'}  colorScheme={`purple`} onClick={ forwardScreenAndPopup } type={"submit"} > Submit</Button>
     </Container>  
     </>
   )

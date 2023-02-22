@@ -9,6 +9,7 @@ import Guardian from "../component/Guardian";
 import DisplayData from "../component/DisplayData";
 import useStore from "../util/useStore";
 import ThankYouForm from "../component/thankYouForm";
+import { useEffect } from "react";
 
 export default function Page () {
 
@@ -32,6 +33,8 @@ export default function Page () {
   // 16. Hook must be called inside the componenet
   // 17. Everytime using arrow function and wrapped with function body {} its needed return statement
   // 18. Invalid Hook call - should be inside body component only 
+  // 19. dont forgot set is a function && hook
+  // 20. util folder is a reuseable code 
 
   //TODO 
   // mistake not improve yet 6 and 11 !
@@ -46,9 +49,14 @@ export default function Page () {
   const screen = useStore((state)=> state.screen)
 
   //change background image
-  const backgroundImage = ["/assets/dino.webp","/assets/bear.webp","/assets/animal3.webp","/assets/forest1.webp","/assets/congrat3.webp","/assets/congrat3.webp"]
+  const backgroundImage = ["/assets/dino.webp","/assets/bear.webp","/assets/animal3.webp","/assets/forest1.webp","/assets/Bg-display.webp","/assets/Bg-display.webp"]
+  // "/assets/congrat3.webp","/assets/congrat3.webp"
   const changeBackgroundImage = () => {
   return backgroundImage[screen] }
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [screen]);
   
   return(
     <>

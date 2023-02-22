@@ -7,6 +7,7 @@ import { motion } from "framer-motion"
 import useStore from "../util/useStore";
 import AddPhotoIcon from '@mui/icons-material/AddAPhoto';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 
 
 const Guardian = () => {
@@ -19,7 +20,7 @@ const Guardian = () => {
 //validation yup
 const schema = yup.object().shape({
 
-parentChildName: yup.string().required("You need to insert parent child name"),
+guardianName: yup.string().required("You need to insert name"),
 
 childs: yup.array().of(
   yup.object().shape({
@@ -38,8 +39,11 @@ childs: yup.array().of(
 //for insert the data from form to global state (object data)
 const sendDataFormToZustand = useStore((state)=> state.setFormData)
 
+//reset the form
+const resetFields = useStore((state) => state.resetFields)
+
 //react hook form
-const {register, handleSubmit, formState: {errors}, control} = useForm({
+const {register, handleSubmit, formState: {errors}, control,reset} = useForm({
 resolver: yupResolver(schema)
 })
 
@@ -56,7 +60,7 @@ const {fields, append, prepend, remove, swap, move, insert } = useFieldArray({
 })
 
 //for changing screen
-const changePrevScreen = useStore((state)=>{ return state.setScreenTo1})
+const changePrevScreen = useStore((state)=> state.setScreenTo1)
 const changeForwScreen = useStore((state)=> state.setScreenTo4)
 
 //for display profile picture
@@ -66,7 +70,13 @@ const [profilePicture, setProfilePicture] = useState([])
 //array.from create a new, shallow-copied Array instance from an iterable or array-like object. so it can be loop (element,index)
 const ageOptions = Array.from({ length: 12 }, (_, index) => index + 1);
 
-//test
+//test 1
+const cuba = () =>{
+  changePrevScreen(),
+  reset()
+}
+
+//test 2
 const [storePic,useStorePic] = useState([])
 
 const nama = () =>{
@@ -86,26 +96,28 @@ const nama = () =>{
     <>
     <form onSubmit={handleSubmit(onSubmit)}>
 
-    <FormControl isInvalid={errors.parentChildName} mb={"10px"} >
+    <FormControl isInvalid={errors.guardianName} mb={"10px"} >
       <FormLabel > Name </FormLabel>
-      <Input borderRadius={"10px"} mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='purple.600' {...register(`parentChildName`)}/>
-      <FormErrorMessage>{errors.parentChildName?.message}</FormErrorMessage> 
+      <Input borderRadius={"10px"} mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='purple.600' {...register(`guardianName`)}/>
+      <FormErrorMessage>{errors.guardianName?.message}</FormErrorMessage> 
     </FormControl>
 
   <Checkbox colorScheme='purple' defaultChecked {...register(`newsletter`)} mb={"15px"}>
     Receive Newsletter
   </Checkbox>
       
-
+  
   {fields.map((item, index) => (
     console.log("inside item",item,index),
-    <>
+    <Box maxW={'600px'} w={'full'} bg={"pink.200"} padding={"15px"} boxShadow={'2xl'} rounded={'20px'} overflow={'hidden'} mb={"35px"}>
       <FormControl key={item.id} isInvalid={errors.profilePicture} onChange={(e)=>{
         const presentProfilePicture = URL.createObjectURL(e.target.files[0])
         setProfilePicture((prevPicture)=> [...prevPicture, presentProfilePicture]
         )}} mb={"15px"} >
 
-      <Button as="label" htmlFor={`file-input ${index}`} color={"blue.500"} border={"2px"} borderColor={"blue.500"} width={"100%"}><AddPhotoIcon fontSize="small"/> Upload Picture </Button>
+      <Button as="label" htmlFor={`file-input ${index}`} color={"blue.500"} border={"2px"} borderColor={"blue.500"} width={"100%"} display={"flex"} alignItems={"center"}>
+        <AddPhotoIcon style={{marginRight: "8px"}} fontSize="small"/> Upload Picture
+      </Button>
       <Input mb={'4px'} id={`file-input ${index}`} type={'file'} focusBorderColor='purple.600' accept=".jpg,.jpeg,.png" {...register(`childs.${index}.profilePicture`)} style={{ display: "none" }} />
        {/* <Input mb={'4px'} id="file-input" type={'file'}  color={"black"}  focusBorderColor='lime' {...register(`childs.${index}.profilePicture`)} /> */}
       </FormControl>
@@ -144,16 +156,19 @@ const nama = () =>{
       </FormControl>
       </Flex>
 
-      <Button style={({backgroundColor:"red" , color:"white"})} mb={"15px"} onClick={() => remove(index)}>Delete</Button>
-        </>
+      <VStack>
+      <Button style={({backgroundColor:"red" , color:"white"})} mb={"15px"} onClick={() => remove(index)} mt={"15px"}> <PersonRemoveIcon style={{marginRight: "8px"}}/>  Remove Child</Button>
+      </VStack>
+      </Box>
         ))}
+
         <VStack>
-       <Button mb={'20px'} onClick={() => append()} width={"100%"} color={"purple.500"} fontWeight={"extrabold"} border={"2px"} borderColor={"purple.500"} > <PersonAddIcon fontSize="small"/> Add Child  </Button>
+       <Button mb={'20px'} onClick={() => append()} width={"100%"} color={"purple.500"} fontWeight={"extrabold"} border={"2px"} borderColor={"purple.500"} > <PersonAddIcon style={{marginRight: "8px"}} fontSize="small"/> Add Child  </Button>
        </VStack> 
     
     <Container display={"flex"} justifyContent={"space-between"} alignItems={""}>
-      <motion.div whileTap={{scale:0.9}} onClick={changePrevScreen}>
-        <Button width={'100%'} type={"submit"}  colorScheme={`gray`}>Back</Button>
+      <motion.div whileTap={{scale:0.9}} onClick={cuba}>
+        <Button width={'100%'} colorScheme={`gray`} onClick={resetFields}>Back</Button>
       </motion.div>
         <Button width={'40%'}  colorScheme={`purple`} type={"submit"}>Submit</Button>
     </Container> 
