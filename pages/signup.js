@@ -49,10 +49,15 @@ export default function Page () {
   const screen = useStore((state)=> state.screen)
 
   //change background image
-  const backgroundImage = ["/assets/dino.webp","/assets/bear.webp","/assets/animal3.webp","/assets/forest1.webp","/assets/Bg-display.webp","/assets/Bg-display.webp"]
-  // "/assets/congrat3.webp","/assets/congrat3.webp"
+  const backgroundImage = ["","","","","/assets/Bg-display.webp","/assets/Bg-display.webp"]
+  // const backgroundImage = ["/assets/dino.webp","/assets/bear.webp","/assets/animal3.webp","/assets/forest1.webp","/assets/Bg-display.webp","/assets/Bg-display.webp"]
   const changeBackgroundImage = () => {
   return backgroundImage[screen] }
+
+  // //change background color
+  // const backgroundColor = ["#EB1F27","","","","#EB1F27","#EB1F27"]
+  // const changeBackgroundColor = () => {
+  // return backgroundColor[screen] }
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -60,11 +65,11 @@ export default function Page () {
   
   return(
     <>
-    <Box bgImage={changeBackgroundImage} bgSize={'100%'} >  
+    <Box bgImage={changeBackgroundImage} bgColor={"#f4f7fe"} bgSize={'100%'} >  
     <Header/>
-    <Box bg={'purple.100'} borderRadius={"10px"} mb={"195px"} padding={'40px'}  borderWidth={'1px'} mt={'100px'} maxW={'500px'} mx={"auto"} display={'flex'} flexDirection={'column'}   >
+    <Box bg={'#EBDDFB'} borderRadius={"10px"} mb={"195px"} padding={'40px'}  borderWidth={'1px'} mt={'100px'} maxW={'500px'} mx={"auto"} display={'flex'} flexDirection={'column'}   >
       <VStack>
-           <Text fontWeight={'bold'} fontSize={'25px'} mb={"10px"}>Sign Up Leon Classroom </Text>
+           <Text fontWeight={'bold'} fontSize={'25px'} mb={"10px"}> Sign Up Leon Classroom </Text>
       </VStack> 
       { screen === 0 && <SignUpForm/>}
 

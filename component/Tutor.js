@@ -1,4 +1,4 @@
-import { Button, Input, FormLabel, FormControl, FormErrorMessage, Container, Select, RadioGroup, Stack, Radio, Textarea, Image, Flex, Checkbox } from "@chakra-ui/react"
+import { Button, Input, FormLabel, FormControl, FormErrorMessage, Container, Select, Textarea, Image, Flex, Checkbox } from "@chakra-ui/react"
 import React, { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -11,10 +11,11 @@ const Tutor = () => {
 
 //validation yup
 const schema = yup.object({
-aboutMe: yup.string().required("You need to write about yourself").min(15,"description too short , min character 15").max(350,"description too long , max character 350"),
+name: yup.string().required("Please write your name"),
+aboutMe: yup.string().required("Please write about yourself").min(15,"description too short , min character 15").max(350,"description too long , max character 350"),
 profilePicture: yup.mixed().test(
   "profilePicture",
-  "Your need to upload picture and the file must be not exceed 5MB",
+  "Please upload your picture and the file must be not exceed 5MB",
   (value)=>{ 
     return value[0] && !!value[0].size ? value[0].size <= 5000000 : false
    }
@@ -55,13 +56,13 @@ changeForwardScreen()
 
       <FormControl isInvalid={errors.name} >
       <FormLabel >Name</FormLabel>
-      <Input borderRadius={"10px"} mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='purple.600' {...register(`name`)}/>
+      <Input borderRadius={"10px"} mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor={'purple.600'} {...register(`name`)}/>
       <FormErrorMessage>{errors.name?.message}</FormErrorMessage> 
       </FormControl>
 
       <FormControl isInvalid={errors.experience} mb={"15px"} >
       <FormLabel >Years Of Teaching Experience</FormLabel>
-      <Select bg={"white"} borderRadius={"10px"} {...register("experience")} focusBorderColor='purple.600'>
+      <Select bg={"white"} borderRadius={"10px"} cursor={"pointer"} {...register("experience")} focusBorderColor='purple.600'>
         <option>None</option>
         <option>1</option>
         <option>2</option>
@@ -80,8 +81,8 @@ changeForwardScreen()
 
       <FormControl isInvalid={errors.profilePicture} onChange={handleChange}>
       <FormLabel >Profile Picture</FormLabel>
-      <Button as="label" htmlFor={`file-input`} color={"purple.500"} border={"2px"} borderColor={"purple.500"} width={"100%"} mb={"15px"}> <AddPhotoIcon fontSize="small" style={{marginRight: "8px"}}/> Upload Picture</Button>
-      <Input mb={'4px'} id={`file-input`} type={'file'} focusBorderColor='purple.600' accept=".jpg,.jpeg,.png" {...register("profilePicture")} style={{ display: "none" }} />
+      <Button as="label" htmlFor={`file-input`} color={"purple.500"} border={"2px"} borderColor={"purple.500"} cursor={"pointer"} width={"100%"} mb={"15px"}> <AddPhotoIcon fontSize="small" style={{marginRight: "8px"}}/> Upload Picture</Button>
+      <Input mb={'4px'} id={`file-input`} type={'file'} focusBorderColor='purple.600' accept=".jpg,.jpeg,.png,.webp" {...register("profilePicture")} style={{ display: "none" }} />
        <Flex justifyContent={"center"} alignItems={"center"} mb={"15px"}>
       <Image src={profilePicture}  />
       </Flex>  

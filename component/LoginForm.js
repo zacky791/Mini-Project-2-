@@ -19,7 +19,7 @@ export default function LoginForm() {
 
   return (
     <>
-    <Box bg={"purple.100"} mb={"195px"} padding={'40px'} borderRadius={"10px"} borderWidth={'1px'} mt={'150px'} gap={2} maxW={'500px'} mx={"auto"} display={'flex'} flexDirection={'column'}  onSubmit={handleSubmit(onSubmit)  }>
+    <Box bg={'#EBDDFB'} mb={"195px"} padding={'40px'} borderRadius={"10px"} borderWidth={'1px'} mt={'150px'} gap={2} maxW={'500px'} mx={"auto"} display={'flex'} flexDirection={'column'}  onSubmit={handleSubmit(onSubmit)  }>
       <VStack>
            <Text fontWeight={'bold'} fontSize={'30px'}>Login</Text>
       </VStack> 
@@ -28,7 +28,7 @@ export default function LoginForm() {
         
       <FormControl isInvalid={errors.email}>
       <FormLabel >Email</FormLabel>
-      <Input mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='lime' {...register("email", { 
+      <Input mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor={'purple.600'} {...register("email", { 
           required: "Please insert your Email", 
           pattern: { value: /[A-Z]+[a-zA-Z0-9_.+]+[@][a-z]+[\.][a-zA-Z0-9-.]{2,3}/, message: 'Email required upper case and (@.)' }
       })} />
@@ -43,7 +43,7 @@ export default function LoginForm() {
         color={"black"}
         pr={"10px"}
         type={show ? 'text' : 'password'}
-        focusBorderColor={'lime'}
+        focusBorderColor={'purple.600'}
         {...register("password", { required: "Please insert your password", 
         minLength: { value: 4 , message: 'Password too short !' },
         maxLength: { value: 15 , message: 'Password too long !' }
@@ -59,7 +59,7 @@ export default function LoginForm() {
         <FormErrorMessage mb={'10px'}>{errors.password && errors.password.message}</FormErrorMessage>
       </FormControl>
 
-        <motion.div whileTap={{scale:0.7}}>
+        <motion.div whileTap={{scale:1.05}}>
         <Button width={'100%'} type={"submit"}  colorScheme={`purple`} onClick={handleLogin}> Submit</Button>
         </motion.div>
        </form>

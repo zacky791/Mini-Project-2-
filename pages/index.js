@@ -15,9 +15,9 @@ export default function SignUpForm() {
 
   return (
     <>
-    <Box bgImage={"/assets/forest5.webp"} width={"100%"} height={"100vh"}>
+    <Box bgImage={""} width={"100%"} height={"100vh"} bgColor={"#f4f7fe"} >
       <Header/>
-    <Box  borderRadius={"10px"} bg={"purple.200"}
+    <Box  borderRadius={"10px"} bg={"#EBDDFB"}
      paddingX={'20px'} paddingY={"60px"} width={"500px"} mx={"auto"} mt={"180px"} display={"flex"} alignItems={"center"} justifyContent={"center"}  flexDirection='column'>
       <VStack gap={"5px"}>
         <HStack>  

@@ -102,27 +102,10 @@ const DisplayData = () => {
               <Text fontWeight={600}>{data.gender}</Text>
             </Stack>
           </Stack>
-  
-            <Button w={'full'} mt={"30px"} bg={'purple.500'} color={'white'} rounded={'md'} _hover={{
-                transform: 'translateY(-2px)',
-                boxShadow: 'lg',
-              }}>
-              Confirm
-            </Button>
+
         </Box>
       </Box>
     </Center>
-
-
-
-        {/* <Text>{`Child ${i+1}`}</Text>
-        <Text>{`Profile Picture :  `}</Text>
-        <Flex justifyContent={"center"} alignItems={"center"}>
-          <Image src={URL.createObjectURL(new Blob(data.profilePicture))} borderRadius={"10px"} boxSize='250px'/>
-        </Flex>  
-        <Text>{`Name : ${data.name}`}</Text>
-        <Text>{`Age : ${data.age}`}</Text>
-        <Text>{`Gender : ${data.gender}`}</Text> */}
         
       </>
     )) : 
@@ -164,26 +147,10 @@ const DisplayData = () => {
             </Text>
             </Box>
           </Stack>
-
-          {/* <Button w={'full'} mt={8} bg={useColorModeValue('purple.500', 'gray.900')} color={'white'} rounded={'md'} _hover={{
-              transform: 'translateY(-2px)',
-              boxShadow: 'lg',
-            }}>
-            Confirm
-          </Button> */}
+          
         </Box>
       </Box>
     </Center>
-
-      {/* <Text>Your Form</Text>
-      <Text>{`Profile Picture : `}</Text>
-      <Flex justifyContent={"center"} alignItems={"center"}>
-          <Image src={URL.createObjectURL(new Blob(getDataFormToZustand.profilePicture))}/>
-      </Flex>  
-      <Text>{`Teaching Experience : ${getDataFormToZustand.experience}`}</Text>
-      <Text>{`About yourself : ${getDataFormToZustand.aboutMe}`}</Text>
-      <Text>{`Newsletter : ${getDataFormToZustand.newsletter}`}</Text> */}
-
     </>
     }  
     

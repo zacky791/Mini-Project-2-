@@ -18,9 +18,9 @@ const SignUpForm = () => {
 
 //validation yup
 const schema = yup.object({
-  username: yup.string().required("you need to insert your username"),
-  email: yup.string().email().required("you need to insert your email"),
-  password: yup.string().required("you need to insert your password").min(8,"password too short"),
+  username: yup.string().required("Please insert your username"),
+  email: yup.string().email().required("Please insert your email"),
+  password: yup.string().required("Please insert your password").min(8,"password too short"),
 }).required();
 
 //for insert the data from form to global state (object data)
@@ -49,13 +49,13 @@ const onSubmit = data =>{
     <form onSubmit={handleSubmit(onSubmit)}>
     <FormControl isInvalid={errors.username}>
         <FormLabel >Username</FormLabel>
-      <Input mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor='lime' {...register("username")} />
+      <Input mb={'4px'} type={'text'} bg={'white'} color={"black"} focusBorderColor={'purple.600'} {...register("username")} />
       <FormErrorMessage>{errors.username && errors.username.message}</FormErrorMessage> 
       </FormControl>
 
       <FormControl isInvalid={errors.email}>
       <FormLabel >Email</FormLabel>
-      <Input mb={'4px'} type={'email'} bg={'white'} color={"black"} focusBorderColor='lime' {...register("email")} />
+      <Input mb={'4px'} type={'email'} bg={'white'} color={"black"} focusBorderColor={'purple.600'} {...register("email")} />
       <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage> 
       </FormControl>
       
@@ -68,7 +68,7 @@ const onSubmit = data =>{
         color={"black"}
         pr={"10px"}
         type={showPassword ? 'text' : 'password'}
-        focusBorderColor={'lime'}
+        focusBorderColor={'purple.600'}
         {...register("password")}
       />
         

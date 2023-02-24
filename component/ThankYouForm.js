@@ -2,7 +2,6 @@ import { Center, Text } from '@chakra-ui/react'
 import React from 'react'
 import ChakraNextLinkButton from './ui/Button'
 import { motion } from "framer-motion"
-import useStore from '../util/useStore'
 
 const ThankYouForm = () => {
 

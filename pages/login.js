@@ -6,7 +6,7 @@ import Header from "../component/Navbar"
 export default function page () {
 
   return(
-    <Box bgImage={"/assets/animal2.webp"} bgSize={'100%'}   >  
+    <Box  bgColor={"#f4f7fe"} >  
     <Header/>
     <Form/>
     <Footer/>
