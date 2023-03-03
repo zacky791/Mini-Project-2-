@@ -68,13 +68,14 @@ const DisplayData = () => {
 
     { getDataFormToZustand.childs ? getDataFormToZustand.childs.map((data, i) => (
       <>
+      {console.log("data from display" , data)}
       <Center py={"20px"}>
-      <Box maxW={'270px'} w={'full'} bg={ data.gender !== "Male" ? "pink.200":"purple.200"} boxShadow={'2xl'} rounded={'md'} overflow={'hidden'}>
+      <Box key={data.id} maxW={'270px'} w={'full'} bg={ data.gender !== "Male" ? "yellow.100":"purple.200"} boxShadow={'2xl'} rounded={'md'} overflow={'hidden'}>
         <Image h={'120px'} w={'full'} objectFit={'cover'} src={
             'https://img.freepik.com/premium-vector/cute-lion-tiger-couple-with-love-heart-tail-cartoon-vector-icon-illustration-animal-nature-icon_138676-5003.jpg?w=740'}
         />
         <Flex justify={'center'} mt={"-50px"}>
-          <Avatar size={'xl'} src={URL.createObjectURL(new Blob(data.profilePicture))} alt={'Author'} css={{
+          <Avatar size={'xl'} src={ data.profilePicture ? URL.createObjectURL(new Blob(data.profilePicture)) : null } alt={'Author'} css={{
               border: '2px solid white',
             }}
           />
@@ -147,7 +148,7 @@ const DisplayData = () => {
             </Text>
             </Box>
           </Stack>
-          
+
         </Box>
       </Box>
     </Center>

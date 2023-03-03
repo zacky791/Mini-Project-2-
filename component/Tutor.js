@@ -6,6 +6,9 @@ import { useForm } from "react-hook-form";
 import { motion } from "framer-motion"
 import useStore from "../util/useStore";
 import AddPhotoIcon from '@mui/icons-material/AddAPhoto';
+import NoPhotographyIcon from '@mui/icons-material/NoPhotography';
+
+//FIXME - currently it has 2 state. You need to extract all the value from useform state 
 
 const Tutor = () => {
 
@@ -41,7 +44,7 @@ const [profilePicture, setProfilePicture] = useState()
 const sendDataFormToZustand = useStore((state)=> state.setFormData)
 
 //react hook form
-const {register, handleSubmit, formState: {errors}} = useForm({
+const {register, handleSubmit, formState: {errors}, getValues , setValue} = useForm({
 resolver: yupResolver(schema)
 })
 const onSubmit = data =>{
@@ -81,13 +84,19 @@ changeForwardScreen()
 
       <FormControl isInvalid={errors.profilePicture} onChange={handleChange}>
       <FormLabel >Profile Picture</FormLabel>
-      <Button as="label" htmlFor={`file-input`} color={"purple.500"} border={"2px"} borderColor={"purple.500"} cursor={"pointer"} width={"100%"} mb={"15px"}> <AddPhotoIcon fontSize="small" style={{marginRight: "8px"}}/> Upload Picture</Button>
+      <Button style={{ display: profilePicture ? "none" : ""}} as="label" htmlFor={`file-input`} color={"purple.500"} border={"2px"} borderColor={"purple.500"} cursor={"pointer"} width={"100%"} mb={"15px"}> <AddPhotoIcon fontSize="small" style={{marginRight: "8px"}}/> Upload Picture</Button>
       <Input mb={'4px'} id={`file-input`} type={'file'} focusBorderColor='purple.600' accept=".jpg,.jpeg,.png,.webp" {...register("profilePicture")} style={{ display: "none" }} />
        <Flex justifyContent={"center"} alignItems={"center"} mb={"15px"}>
-      <Image src={profilePicture}  />
+      <Image src={ getValues("profilePicture") ? URL.createObjectURL(getValues("profilePicture[0]")) : null }  />
       </Flex>  
       <FormErrorMessage>{errors.profilePicture && errors.profilePicture.message}</FormErrorMessage> 
       </FormControl>
+
+      <Button style={{ display: profilePicture ? "" : "none"}} as="label" onClick={()=>{
+        setValue("profilePicture",null)
+      }} cursor={"pointer"} color={"red.500"} border={"2px"} borderColor={"red.500"} width={"100%"} display={"flex"} alignItems={"center"}>
+        <NoPhotographyIcon style={{marginRight: "8px"}} fontSize="small"/> Remove profile picture
+      </Button>
 
       <Checkbox colorScheme='purple' defaultChecked {...register(`newsletter`)} mb={"15px"}>
        Receive Newsletter
@@ -99,6 +108,7 @@ changeForwardScreen()
       </motion.div>
         <Button width={'40%'}  colorScheme={`purple`} type={"submit"} > Submit</Button>
       </Container>  
+      <Button onMouseEnter={()=>{console.log(getValues())}}>Get value</Button>
       </form>
       </>
   )

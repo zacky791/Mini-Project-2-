@@ -1,4 +1,4 @@
-import { Button, Input, InputGroup, InputRightElement, FormLabel, FormControl, FormErrorMessage } from "@chakra-ui/react"
+import { Button, Input, InputGroup, InputRightElement, FormLabel, FormControl, FormErrorMessage, VStack } from "@chakra-ui/react"
 import React, { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -7,6 +7,8 @@ import { motion } from "framer-motion"
 import  useStore  from "../util/useStore";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import ChakraNextLinkButton from "./ui/Button";
+import ChakraNextLinkText from "./ui/TextLink";
 
 //REVIEW - 
 // need to make logic pass the validation scehama first then can change page
@@ -58,7 +60,6 @@ const onSubmit = data =>{
       <Input mb={'4px'} type={'email'} bg={'white'} color={"black"} focusBorderColor={'purple.600'} {...register("email")} />
       <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage> 
       </FormControl>
-      
 
       <FormControl isInvalid={errors.password} mb={'10px'}>
       <FormLabel >Password</FormLabel>
@@ -70,10 +71,11 @@ const onSubmit = data =>{
         type={showPassword ? 'text' : 'password'}
         focusBorderColor={'purple.600'}
         {...register("password")}
+        mb={"10px"}
       />
         
       <InputRightElement width={'80px'}>
-        <Button bg={"purple.100"} h={'27px'} size={'md'} onClick={handleClick}>
+        <Button bg={"purple.100"} h={'27px'} size={'md'}  onClick={handleClick}>
         {showPassword ? <RemoveRedEyeIcon color="disabled"/>: <VisibilityOffIcon/> }  
         {/* {showPassword ? 'Hide' : 'Show'} */}
         </Button>
@@ -82,9 +84,14 @@ const onSubmit = data =>{
         <FormErrorMessage mb={'10px'}> {errors.password && errors.password.message} </FormErrorMessage>
       </FormControl>
           <motion.div whileTap={{scale:0.9}}>
-        <Button width={'100%'}  colorScheme={`purple`} type={"submit"} > Next </Button>
+        <Button width={'100%'}  colorScheme={`purple`} type={"submit"}  > Next </Button>
         </motion.div>  
         </form>
+
+        <VStack>
+        <ChakraNextLinkText href={'/login'} color={"purple.500"} mt={"20px"} _hover={{textDecoration:"underline"}} >Already registered ? Sign in here</ChakraNextLinkText>
+        </VStack>
+
       </>
   )
 }

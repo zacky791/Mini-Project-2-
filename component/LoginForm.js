@@ -2,6 +2,7 @@ import { Box, Button, Input, InputGroup, InputRightElement, VStack, Text, FormLa
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 import { motion } from "framer-motion"
+import ChakraNextLinkText from "./ui/TextLink";
 
 export default function LoginForm() {
   const {register, handleSubmit, formState: {errors} } = useForm()
@@ -60,9 +61,12 @@ export default function LoginForm() {
       </FormControl>
 
         <motion.div whileTap={{scale:1.05}}>
-        <Button width={'100%'} type={"submit"}  colorScheme={`purple`} onClick={handleLogin}> Submit</Button>
+        <Button width={'100%'} type={"submit"}  colorScheme={`purple`} mt={"10px"} onClick={handleLogin}> Submit</Button>
         </motion.div>
        </form>
+       <VStack>
+        <ChakraNextLinkText href={'/signup'} color={"purple.500"} mt={"20px"} _hover={{textDecoration:"underline"}} >Register for LEON Classroon</ChakraNextLinkText>
+        </VStack>
         </Box>
     </>
   );

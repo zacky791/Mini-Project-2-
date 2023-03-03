@@ -67,7 +67,7 @@ export default function Page () {
     <>
     <Box bgImage={changeBackgroundImage} bgColor={"#f4f7fe"} bgSize={'100%'} >  
     <Header/>
-    <Box bg={'#EBDDFB'} borderRadius={"10px"} mb={"195px"} padding={'40px'}  borderWidth={'1px'} mt={'100px'} maxW={'500px'} mx={"auto"} display={'flex'} flexDirection={'column'}   >
+    <Box bg={'#EBDDFB'} shadow={"lg"} borderRadius={"10px"} mb={"195px"} padding={'40px'}  borderWidth={'1px'} mt={'100px'} maxW={'500px'} mx={"auto"} display={'flex'} flexDirection={'column'}   >
       <VStack>
            <Text fontWeight={'bold'} fontSize={'25px'} mb={"10px"}> Sign Up Leon Classroom </Text>
       </VStack> 

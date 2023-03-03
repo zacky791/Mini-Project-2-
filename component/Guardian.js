@@ -1,4 +1,4 @@
-import { Button, Input, FormLabel, FormControl, FormErrorMessage, Container, Select, RadioGroup, Stack, Radio, Image, Flex, VStack, Checkbox, Box, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, } from "@chakra-ui/react"
+import { Button, Input, FormLabel, FormControl, FormErrorMessage, Container, Select, RadioGroup, Stack, Radio, Image, Flex, VStack, Checkbox, Box, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Text, } from "@chakra-ui/react"
 import React, { useEffect, useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
@@ -8,6 +8,7 @@ import useStore from "../util/useStore";
 import AddPhotoIcon from '@mui/icons-material/AddAPhoto';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import NoPhotographyIcon from '@mui/icons-material/NoPhotography';
 
 
 const Guardian = () => {
@@ -43,7 +44,7 @@ const sendDataFormToZustand = useStore((state)=> state.setFormData)
 const resetFields = useStore((state) => state.resetFields)
 
 //react hook form
-const {register, handleSubmit, formState: {errors}, control,reset} = useForm({
+const {register, handleSubmit, formState: {errors}, control,reset, setValue, getValues ,watch} = useForm({
 resolver: yupResolver(schema)
 })
 
@@ -51,6 +52,7 @@ const onSubmit = data => {
 console.log(data); 
 onOpen();
 sendDataFormToZustand(data);
+checkPictures()
 }
 
 //for dynamic form
@@ -63,9 +65,6 @@ const {fields, append, prepend, remove, swap, move, insert } = useFieldArray({
 const changePrevScreen = useStore((state)=> state.setScreenTo1)
 const changeForwScreen = useStore((state)=> state.setScreenTo4)
 
-//for display profile picture
-const [profilePicture, setProfilePicture] = useState([])
-
 //for handling loop age
 //array.from create a new, shallow-copied Array instance from an iterable or array-like object. so it can be loop (element,index)
 const ageOptions = Array.from({ length: 12 }, (_, index) => index + 1);
@@ -73,34 +72,32 @@ const ageOptions = Array.from({ length: 12 }, (_, index) => index + 1);
 //for reconfirm form before submit
 const { isOpen, onOpen, onClose } = useDisclosure();
 
-//FIXME - debuging on how to remove picture when remove child
-const removeChild = (index) => {
-  remove(index);
-  // setProfilePicture((prevPicture) => prevPicture.filter((_, i) => i !== index));
-};
+//get value for profile picture
+const getValueProfilePic= (index) => getValues(`childs.${index}.profilePicture[0]`)
 
-// setProfilePicture((prevPicture) => prevPicture.filter((_, i) => i !== index));
+// changes can be detect and control
+const pic = (index) =>{
+  return(
+   watch(`childs.${index}.profilePicture`),
+   null //NOTE - put null so that not return error message for returning object
+   )}
 
+//handle error message for user does not upload dp picture
+const [error,setError]=useState()
 
-//FIXME - debuging on how to replace photo when uploaded again
-const [storePic,useStorePic] = useState([])
-
-const nama = () =>{
-  console.log(profilePicture)
+const checkPictures = () => {
+  for (let i = 0; i < fields.length; i++) {
+    if (!getValueProfilePic(i)) {
+      setError(false);
+      return;
+    }
+  }
+  setError(true);
 }
-
-// useEffect(()=>{
-//   if (profilePicture[index]) {
-//     const url = URL.createObjectURL(profilePicture[index]);
-//     setPreviewImage(url);
-//   } else {
-//     setPreviewImage(null);
-//   }
-// }, [profilePicture[index]]);
 
   return (
     <>
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} >
 
     <FormControl isInvalid={errors.guardianName} mb={"10px"} >
       <FormLabel > Name </FormLabel>
@@ -115,23 +112,35 @@ const nama = () =>{
   
   {fields.map((item, index) => (
     console.log("inside item",item,index),
-    <Box key={item.id} maxW={'600px'} w={'full'} bg={"#FEF0D6"} padding={"15px"} boxShadow={'2xl'} rounded={'20px'} overflow={'hidden'} mb={"35px"}>
-      <FormControl key={item.id} isInvalid={errors.profilePicture} onChange={(e)=>{
-        const presentProfilePicture = e.target.files[0] ? URL.createObjectURL(e.target.files[0]) : null // the e.target.files[0] ? is use when the user upload the picture but cancel it
-        setProfilePicture((prevPicture)=> [...prevPicture, presentProfilePicture]
-        )}} mb={"15px"} >
+    <Box key={item.id} maxW={'600px'} w={'full'} 
+    bg={"#FEF0D6"}
+     padding={"15px"} boxShadow={'2xl'} rounded={'20px'} overflow={'hidden'} mb={"35px"}>
+      <FormControl key={item.id} isInvalid={errors.profilePicture} mb={"15px"}  >
 
-      <Button as="label" htmlFor={`file-input ${index}`} cursor={"pointer"} color={"blue.500"} border={"2px"} borderColor={"blue.500"} width={"100%"} display={"flex"} alignItems={"center"}>
+      <Button style={{ display: getValueProfilePic(index) ? "none" : ""}} onClick={pic(index)} as="label" htmlFor={`file-input ${index}`} cursor={"pointer"} color={"blue.500"} border={"2px"} borderColor={"blue.500"} width={"100%"} display={"flex"} alignItems={"center"}>
         <AddPhotoIcon style={{marginRight: "8px"}} fontSize="small"/> Upload Picture
       </Button>
-      <Input mb={'4px'} id={`file-input ${index}`} type={'file'} focusBorderColor='purple.600' accept=".jpg,.jpeg,.png,.webp" {...register(`childs.${index}.profilePicture`)} style={{ display: "none" }} />
-       {/* <Input mb={'4px'} id="file-input" type={'file'}  color={"black"}  focusBorderColor='lime' {...register(`childs.${index}.profilePicture`)} /> */}
+      <Input mb={'4px'} id={`file-input ${index}`} type={'file'} focusBorderColor='purple.600' accept=".jpg,.jpeg,.png,.webp" {...register(`childs.${index}.profilePicture`)} style={{ display: "none" }}
+      
+      // onChange={(e)=>{
+      //   // const presentProfilePicture = e.target.files[0] ? URL.createObjectURL(e.target.files[0]) : null // the e.target.files[0] ? is use when the user upload the picture but cancel it
+      //   // setProfilePicture((prevPicture)=> [...prevPicture, presentProfilePicture]
+      //   setValue(`childs.${index}.profilePicture`, e.target.files[0])
+      //   }}
+        />
       </FormControl>
 
-      <Flex justifyContent={"center"} alignItems={"center"}>
-      {/* //FIXME - when upload 2 times it does not replace picture */}
-      <Image src={profilePicture?.[index]} borderRadius={"10px"}  />
+      <Flex justifyContent={"center"} alignItems={"center"} mb={"16px"}>
+      <Image
+      src={getValueProfilePic(index) ? URL.createObjectURL(getValues(`childs.${index}.profilePicture[0]`)) : null }
+      borderRadius={"10px"}  />
       </Flex>  
+
+      <Button style={{ display: getValueProfilePic(index) ? "" : "none"}} as="label" onClick={()=>{
+        setValue(`childs.${index}.profilePicture`, null)
+      }} cursor={"pointer"} color={"red.500"} border={"2px"} borderColor={"red.500"} width={"100%"} display={"flex"} alignItems={"center"}>
+        <NoPhotographyIcon style={{marginRight: "8px"}} fontSize="small"/> Remove profile picture
+      </Button>
 
       <FormControl isInvalid={errors.childs?.[index]?.name} >
       <FormLabel >Name</FormLabel>
@@ -163,7 +172,7 @@ const nama = () =>{
       </Flex>
 
       <VStack>
-      <Button style={({backgroundColor:"red" , color:"white"})} mb={"15px"} onClick={()=>{remove(item)}} mt={"15px"}> <PersonRemoveIcon style={{marginRight: "8px"}}/>  Remove Child</Button>
+      <Button style={({backgroundColor:"red" , color:"white"})} mb={"15px"} onClick={()=>{remove(index)}} mt={"15px"}> <PersonRemoveIcon style={{marginRight: "8px"}}/>  Remove Child</Button>
       </VStack>
       </Box>
         ))}
@@ -174,29 +183,30 @@ const nama = () =>{
     
     <Container display={"flex"} justifyContent={"space-between"} alignItems={""}>
       <motion.div whileTap={{scale:0.9}} onClick={changePrevScreen}>
-        <Button width={'100%'} colorScheme={`gray`} onClick={resetFields}>Back</Button>
+        <Button width={'100%'}  colorScheme={`gray`} onClick={resetFields}>Back</Button>
       </motion.div>
-        <Button width={'40%'}  colorScheme={`purple`} type={"submit"} >Submit</Button>
+        <Button width={'40%'}  colorScheme={`purple`} type={"submit"}>Submit</Button>
     </Container> 
       </form>
 
       <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose} >
         <ModalOverlay />
         <ModalContent mt={"260px"}>
-          {/* //FIXME - still not the best approach to display different kind of message when the user did not upload the picture */}
-          <ModalHeader mt={"20px"}> { profilePicture[0] ? " Are sure the information correct ? " : "Are you sure want default photo picture and the information are correct ?" }</ModalHeader>
+          <ModalHeader mt={"20px"}> { error ? "Confirmation information" : "Detected default photo" }</ModalHeader>
+          <ModalBody>
+            <Text>{ error ? "Are information inserted correct ? " : "Are you sure want default photo picture and the information inserted are correct ?" }</Text>
+          </ModalBody>
           <ModalCloseButton />
     
           <ModalFooter>
-            <Button bg='purple.500' color={"white"} mr={"7px"} onClick={changeForwScreen}>
+            <Button bg='purple.500' color={"white"} mr={"7px"} onClick={changeForwScreen} _hover={{ bg: "purple.400" }} >
               Yes
             </Button>
-            <Button onClick={onClose}>Cancel</Button>
+            <Button onClick={onClose}>No</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
 
-      {/* <Button onClick={()=>{console.log("zakaria kacakkkkk",profilePicture)}}>test</Button> */}
   </>
   )
 }
