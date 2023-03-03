@@ -89,7 +89,7 @@ const onSubmit = data =>{
         </form>
 
         <VStack>
-        <ChakraNextLinkText href={'/login'} color={"purple.500"} mt={"20px"} _hover={{textDecoration:"underline"}} >Already registered ? Sign in here</ChakraNextLinkText>
+        <ChakraNextLinkText href={'/Login'} color={"purple.500"} mt={"20px"} _hover={{textDecoration:"underline"}} >Already registered ? Sign in here</ChakraNextLinkText>
         </VStack>
 
       </>

@@ -3,7 +3,7 @@ import Footer from "../component/Footer"
 import Form from "../component/LoginForm"
 import Header from "../component/Navbar"
 
-export default function page () {
+export default function Login () {
 
   return(
     <Box  bgColor={"#f4f7fe"} >  

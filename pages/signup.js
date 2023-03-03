@@ -11,7 +11,7 @@ import useStore from "../util/useStore";
 import ThankYouForm from "../component/thankYouForm";
 import { useEffect } from "react";
 
-export default function Page () {
+export default function SignUp () {
 
   //Mistake for this project for improvement
   // 1. Needed to compress the pic and vid (10mb) to svg or .webp since it fall under 

@@ -6,12 +6,12 @@ import Footer from "../component/Footer";
 import useStore from "../util/useStore";
 
 
-export default function SignUpForm() {
+export default function Home() {
 
   {/* <Center width={"100%"} height={"100vh"} > */}
 
-  //for changing active screen
-  const changeHomeScreen = useStore((state)=> state.setScreenTo0)
+  //for changing active screen to default cause without this lead screen to last one
+  const changeHomeScreen = useStore((state)=> state.setScreenTo0) 
 
   return (
     <>
@@ -23,8 +23,8 @@ export default function SignUpForm() {
         <HStack>  
           <Text fontWeight={'bold'} fontSize={"30px"} mb={"6px"}>Welcome To Homepage</Text>
         </HStack>
-      <ChakraNextLinkButton href={'/signup'} onClick={changeHomeScreen} width={"355px"} fontWeight={'bold'}>Sign Up</ChakraNextLinkButton>
-      <ChakraNextLinkButton href={'/login'} width={"355px"} fontWeight={'bold'}>Login</ChakraNextLinkButton> 
+      <ChakraNextLinkButton href={'/SignUp'} onClick={changeHomeScreen} width={"355px"} fontWeight={'bold'}>Sign Up</ChakraNextLinkButton>
+      <ChakraNextLinkButton href={'/Login'} width={"355px"} fontWeight={'bold'}>Login</ChakraNextLinkButton> 
       </VStack>
     </Box>
     </Box>

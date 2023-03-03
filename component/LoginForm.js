@@ -65,7 +65,7 @@ export default function LoginForm() {
         </motion.div>
        </form>
        <VStack>
-        <ChakraNextLinkText href={'/signup'} color={"purple.500"} mt={"20px"} _hover={{textDecoration:"underline"}} >Register for LEON Classroon</ChakraNextLinkText>
+        <ChakraNextLinkText href={'/SignUp'} color={"purple.500"} mt={"20px"} _hover={{textDecoration:"underline"}} >Register for LEON Classroon</ChakraNextLinkText>
         </VStack>
         </Box>
     </>
